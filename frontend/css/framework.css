@@ -1,0 +1,87 @@
+/* 
+
+*** public style
+
+*/
+
+/* start tags */
+
+*{
+  transition: all .3s;
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -o-transition: all .3s;
+}
+body{
+background: #f4f4f4;
+}
+*::selection{
+background: #0a6cff;
+color: #fff
+}
+/* end tags */
+
+/* start some animations */
+@keyframes fadeout{
+from{opacity: 1}
+to{opacity: 0}
+}
+/* start some animations */
+
+/* start .input */
+
+.input{
+  padding: 7px 34px 7px 7px;
+  width: 26%;
+  border-radius: 11px;
+  border: 1px solid;
+  border-width: 0px 1px 1px 2px;
+  font-size: 16px;
+}
+.input:focus{
+  outline-width: 0;
+  border-width: 1px;
+  box-shadow: 2px 2px 10px #2fafff;
+}
+.input-num{
+padding: 7px;
+width: 69px;
+}
+/* end .input */
+
+/* start die alerts */
+.die{
+animation: fadeout 3s ease-out 3s forwards;
+z-index: 1111;
+}
+/* end die alerts */
+
+/* start checks */
+.true-check{
+  color: #00aa00;
+  font-size: 24px;
+  margin: 3px;
+  position: relative;
+  top: 8px;
+}
+/* end checks */
+
+/* start alert style */
+.alert{
+  text-align: center;
+  font-size: 16px;
+}
+/* end alert style */
+
+/* start reqire */
+.require::before{
+  content: '*';
+  color: red;
+  position: absolute;
+  right: -3px;
+  font-size: 24px;
+  font-weight: 900;
+  top: 26px;
+}
+/* end reqire */

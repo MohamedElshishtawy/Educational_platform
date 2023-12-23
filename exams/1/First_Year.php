@@ -1,0 +1,1 @@
+<?php $exam_name = 'First_Year';$time_you_have = 4;$exam_se = '1se';$exam1 = array('2 × 2',array('3','4','5','6'),'a1','','good','2 is ....',array('number','text','..','..'),'a0','','',);  include_once '../main.php';

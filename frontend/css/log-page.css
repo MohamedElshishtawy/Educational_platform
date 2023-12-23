@@ -1,0 +1,229 @@
+/*
+
+*** This style for index -> login page
+** v0.1
+*/
+
+/* start main tages */
+
+body{
+    background: #f4f4f4;
+    color: #545454;
+    overflow: auto;
+}
+*{
+    z-index: 1
+}
+*::selection{
+    background: #0a6cff
+}
+/* end main tages */
+
+/* start some animation */
+@keyframes floot {
+    from{top: 80px}
+    to{top: 60px}
+}
+@keyframes floot-phone {
+  from{top: 50px}
+  to{top: 40px}
+}
+@keyframes floot-xs {
+    from{top: 98px}
+    to{top: 85px}
+}
+@keyframes floot-xxs {
+  from{top: 95px}
+  to{top: 115px}
+}
+/* end some animation */
+
+/* start login page */
+
+.log-form .t1{
+    color: #fff;
+    position: relative;
+    z-index: 2
+}
+.log-form .back{
+    background: #0a6cff;
+    width: 100%;
+    height: 180px;
+    position: absolute;
+    top: 0px;
+}
+.log-div{
+    padding: 16px;
+    margin-top: 21px;
+    width: 70%;
+    background: #fff;
+    position: relative;
+    right: 15%;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px;
+    -webkit-box-shadow: 2px 2px 10px;
+    -moz-box-shadow: 2px 2px 10px;
+    overflow: hidden;
+}
+.log-div .img{
+    width: 250px;
+    position: absolute;
+    left: 40px;
+    top: 77px;
+    animation: floot .9s 0s infinite alternate linear;
+    z-index: 1
+}
+.name-filed,.pass-field{
+    margin-top: 30px;
+    position: relative
+}
+.txt{
+    font-size: 18px;
+    color: rgb(24, 24, 24);
+}
+.log-div .input{
+    width: 50%;
+    margin-right: 16px;
+}
+.log-div .icon-1,.log-div .icon-2{
+    position: absolute;
+    right: 28px;
+    top: 33px;
+    font-size: 19px;
+}
+.log-div .show-pass,.log-div .hide-pass{
+    font-size: 17px;
+    padding: 6px;
+    cursor: pointer;
+}
+.log-div .btn-info{
+    display: block;
+    margin: 15px auto;
+    z-index: 3;
+    position: relative;
+}
+.footer{
+    background: #ff9e28;
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+}
+.copy{
+    color: #fff;
+    font-size: 16px;
+    text-align: right;
+}
+.my{
+    font-size: 16px;
+    color: #fff;
+    position: absolute;
+    left: 5px;
+}
+.tit::before{
+  content: '';
+  height: 2px;
+  width: 97px;
+  background-color: #42cff9;
+  position: absolute;
+  top: 70px;
+}
+.txt{
+  font-size: 17px;
+}
+.foot{
+  background: #42cff9;
+}
+.foot .tit,
+.foot p{
+  color: #fff;
+  text-align: center;
+}
+.foot div{
+  text-align: center;
+}
+.foot .tit::before{
+  background: rgb(255, 255, 255);
+  width: 138px;
+}
+.foot img{
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position: relative;
+  margin: 3px auto;
+  animation: none;
+}
+.footer{
+    background: #ff9e28;
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+}
+.copy{
+    color: #fff;
+    font-size: 16px;
+    text-align: right;
+}
+.my{
+    font-size: 16px;
+    color: #fff;
+    position: absolute;
+    left: 5px;
+}
+/* for phone */
+
+@media screen and (max-width: 768px) {
+    .log-div,.bags{
+        width: 80%;
+        right: 10%;
+    }
+    .log-div .img{
+        width: 170px;
+        position: absolute;
+        left: 10px;
+        top: 98px;
+        animation: floot-xs .9s 0s infinite alternate linear;
+    }
+    .log-div .input{
+        width: 66%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .copy{
+        display: block;
+        text-align: center;
+        margin: 3px
+    }
+    .my{
+        text-align: center;
+        display: block;
+        position: relative;
+        margin: 3px
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .log-div,.bags{
+        width: 90%;
+        right: 5%;
+    }
+    .log-div .img{
+        opacity: .4;
+        width: 80%;
+        left: 10%;
+        animation: floot-phone .9s 0s infinite alternate linear;
+    }
+    .log-div .input{
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+  .log-div .img{
+      animation: floot-xxs .9s 0s infinite alternate linear;
+  }
+}
+/* end login page */

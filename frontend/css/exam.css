@@ -1,0 +1,208 @@
+/*
+** v2.0
+** style for all exams pages
+*new => [ Update the qustion div shape ]
+*/
+
+/* start timer nav */
+.exam-nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  font-size: 18px;
+  padding: 5px;
+  background: #fff;
+  text-align: center;
+  border-bottom: 2px solid #9300ff;
+  box-shadow: 2px 2px 10px #aaa;
+  -webkit-box-shadow: 2px 2px 10px #aaa;
+  -moz-box-shadow: 2px 2px 10px #aaa;
+  z-index: 111;
+}
+.exam-image {
+  width: 30%;
+  height: 167px;
+  position: relative;
+  right: 35%;
+}
+progress{
+  width: 90%;
+  height: 15px;
+  display: block;
+  margin: 2px auto;
+  background: #eee;
+}
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  
+}
+progress[value]::-webkit-progress-value {
+  background: rgb(2, 252, 2);
+  border-radius: 2px;
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+@media screen and (max-width: 700px) {
+  .exam-image {
+    width: 50%;
+    right: 25%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .exam-image {
+    width: 80%;
+    right: 10%;
+  }
+}
+/* end timer nav */
+
+/* start answer style and qustions */
+ol, ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+li{
+  list-style-position: inside;
+}
+.all-q {
+  width: 97%;
+  background: #fff;
+  display: block;
+  margin: 12px auto;
+  padding: 17px 5px;
+  border-radius: 12px 12px 3px 12px;
+  box-shadow: 2px 2px 10px #858585;
+  -webkit-box-shadow: 2px 2px 10px #858585;
+  -moz-box-shadow: 2px 2px 10px #858585;
+  position: relative;
+  transition: all .7s;
+  -webkit-transition: all .7s;
+  -moz-transition: all .7s;
+  -ms-transition: all .7s;
+  -o-transition: all .7s;
+}
+.all-q::before{
+  content: '';
+  width: 60%;
+  height: 3px;
+  border-radius: 0 0 1px 3px;
+  background: #0a6cff;
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+}
+.all-q:hover{
+  box-shadow: 0 0 0 #eee;
+  -webkit-box-shadow: 0 0 0 #eee;
+  -moz-box-shadow: 2px 2px 10px #eee;
+}
+.all-q:hover:before{
+  width: 90%;
+}
+.qustion {
+  background: rgb(127 231 255 / 54%);
+  padding: 10px 18px 10px 6px;
+  font-size: 18px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  width: 100%;
+}
+.all-q span {
+  display: block;
+}
+label {
+  width: 98%;
+  padding: 5px;
+  margin: 0px;
+  font-size: 15px;
+}
+.answer {
+  display: block;
+  margin: 4px 0;
+  width: 90%;
+  border-radius: 5px;
+}
+@media screen and (max-width: 726px) {
+  label {
+    width: 90%;
+  }
+  .answer {
+    width: 99%;
+  }
+}
+/* end answer style */
+
+/* start true and wrrong ans */
+.true {
+  background: rgba(6, 255, 54, 0.76);
+  margin: 4px 0;
+  width: 90%;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+}
+.wrrong {
+  background: rgba(255, 51, 51, 0.76);
+  margin: 4px 0;
+  width: 90%;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+}
+.the_true {
+  background: rgba(233, 255, 39, 0.364);
+  margin: 4px 0;
+  width: 90%;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+}
+.ans {
+  display: block;
+  margin: 4px 0;
+  width: 90%;
+  border-radius: 5px;
+}
+/* end true and wrrong ans */
+
+/* start btn */
+.btn {
+  display: block;
+  margin: 20px auto;
+}
+/* end btn */
+
+/* start alert message */
+.message{
+  background: #fff;
+  box-shadow: 1px 1px 10px rgb(245, 42, 42);
+  -webkit-box-shadow: 1px 1px 10px rgb(245, 42, 42);
+  border-radius: 15px;
+}
+.message button{
+  display: inline;
+  margin: 30px 5px;
+}
+.message section div:nth-child(1){
+  font-size: 17px;
+  margin: 15px 0;
+}
+.message section div:nth-child(1) span{
+  color: red;
+}
+.message section div:nth-child(2){
+  margin: 10px 0;
+}
+.message section div{
+  font-size: 16px;
+}
+
+/* end alert message */
+

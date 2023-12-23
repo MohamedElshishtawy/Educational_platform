@@ -1,0 +1,309 @@
+/* 
+
+*** style for mr page
+
+*/
+
+/* start main */
+body{
+  background: #f4f4f4;
+}
+*{
+  z-index: 1;
+  position: relative;
+}
+.back{
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  z-index: 5;
+}
+/* end main */
+
+/* start my animation */
+@keyframes toRight{
+  from{right: -20px}
+  to{right: 0}
+}
+@keyframes rotateR{
+  from{transform: rotateY(-180deg)}
+  from{transform: rotateY(180deg)}
+}
+/* end my animation */
+
+/* start title page */
+
+.welcome,.prand,.hand{
+  text-align: center;
+  color: #9300ff;
+  position: relative;
+}
+.welcome{
+  animation: toRight 5s .2s;
+}
+.hand{
+  display: block;
+  margin: 0 auto;
+}
+/* end title page */
+
+/* start buttons */
+.for-groub{
+  margin-top: 70px;
+}
+.fields{
+  width: 30%;
+  height: 100px;
+  font-size: 25px;
+  border: 0;
+  border-radius: 15px;
+  color: #f4f4f4;
+}
+.feild-1{ background: rgb(255, 0, 0)    ;margin: 15px 11% 15px 9%;animation: rotateR .4s 1.5s}
+.feild-2{ background: #4d02e0;margin: 15px 9% 15px 10%;animation: rotateR .4s 1.9s}
+.feild-3{ background: #50aeff;margin: 15px 11% 15px 9%;animation: rotateR .4s 2.3s}
+.feild-4{ background: #15b559;margin: 15px 9% 15px 10%;animation: rotateR .4s 2.7s}
+.feild-5{ background: #ff00eb;margin: 15px 11% 15px 9%;animation: rotateR .4s 3.1s}
+.feild-6{ background: #00a7ff;margin: 15px 9% 15px 10%;animation: rotateR .4s 3.5s}
+.feild-7{ background: #9100ff;margin: 15px 11% 15px 9%;animation: rotateR .4s 3.9s}
+.feild-8{ background: #e2bd0a;margin: 15px 9% 15px 10%;animation: rotateR .4s 4.3s}
+.feild-9{ background: #0066ff;margin: 15px 35% 15px 35%;animation: rotateR .4s 4.7s}
+.fields:hover{
+  box-shadow			: 2px 2px 10px #000;
+  -webkit-box-shadow  : 2px 2px 10px #000;
+  -moz-box-shadow		: 2px 2px 10px #000;
+}
+@media screen and (max-width: 700px){
+  .fields{
+      width: 70%;
+      font-size: 20px;
+  }
+  .feild-1{ margin: 15px 15%}
+  .feild-2{ margin: 15px 15%}
+  .feild-3{ margin: 15px 15%}
+  .feild-4{ margin: 15px 15%}
+  .feild-5{ margin: 15px 15%}
+  .feild-6{ margin: 15px 15%}
+  .feild-7{ margin: 15px 15%}
+  .feild-8{ margin: 15px 15%}
+  .feild-9{ margin: 15px 15%}
+}
+/* end buttons */
+
+/* ///////////////////// */
+
+/*
+===============================
+== students information page ==
+===============================
+*/
+
+/* start title */
+.page-title{
+  text-align: center;
+  color: #666464;
+}
+/* end title */
+
+/* start se btns */
+.all-se-btn{
+  position: relative;
+  width: 90%;
+  min-height: 39px;
+  right: 5%;
+  border: 1 solid
+}
+.se-btn{
+  width: 30%;
+  background: #60cae9;
+  padding: 5px;
+  font-size: 19px;
+  border-radius: 3px;
+  color: #f4f4f4;
+  text-align: center;
+  position: absolute;
+  cursor: pointer
+}
+.se-btn:hover{
+  background: #0cc2f9;
+  box-shadow: 3px 3px 10px black;
+  -webkit-box-shadow: 3px 3px 10px black;
+  -moz-box-shadow: 3px 3px 10px black;
+}
+.se-btn-1{right: 0}
+.se-btn-2{right: 35%}
+.se-btn-3{left: 0}
+.se-btn-active{
+  box-shadow: 3px 3px 10px black;
+  -webkit-box-shadow: 3px 3px 10px black;
+  -moz-box-shadow: 3px 3px 10px black;
+  background: #f4f4f4;
+  color: #353535;
+  cursor: context-menu;
+}
+.se-btn-active:hover{
+  background: #f4f4f4;
+  color: #353535;
+}
+/* end se btns */
+
+/* start mony btn */
+.mony-down{
+  margin: 15px auto -24px auto;
+  display: block;
+}
+/* end mony btn */
+
+/* start table */
+.se-div{
+  display: none;
+  direction: ltr;
+  margin: 40px 5px;
+}
+.student-s-div table {
+  direction: rtl;
+  width: 100%;
+  text-align: center;
+}
+.active-table{
+  display: block;
+}
+.student-s-div th {
+  text-align: center;
+  font-size: 18px;
+  background: #eee;
+}
+.search-1,
+.search-2,
+.search-3{
+  display: none;
+}
+tr:hover{
+  background: #60c9e959;
+}
+td .btn{
+  width: 90%;
+  padding: 6px 7px;
+  margin: 4px auto;
+}
+.table-deg-1 td .btn,
+.table-deg-2 td .btn,
+.table-deg-3 td .btn{
+  width: 70px;
+}
+
+.students-marks td{
+  padding: 5px 0;
+  font-weight: 800;
+  font-size: 16px;
+}
+/* end table */
+
+/*/////////////////////////////////////////////////*/
+
+/*
+======================
+== ADD Student page ==
+======================
+*/
+
+/* start add form */
+.add-form{
+  padding: 16px;
+  margin-top: 21px;
+  width: 70%;
+  background: #fff;
+  position: relative;
+  right: 15%;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px;
+  -webkit-box-shadow: 2px 2px 10px;
+  -moz-box-shadow: 2px 2px 10px;
+  overflow: hidden;
+}
+.add-form .title{
+  text-align: center;
+  color: #5bc0de;
+  margin: 15px;
+}
+.add-form .add-groub{
+  position: relative;
+}
+.add-form .add-groub .txt{
+  font-size: 22px
+}
+.add-form .input{
+  margin-right: 10px;
+  width: 60%;
+  font-size: 18px;
+}
+.add-form .icons{
+  font-size: 20px;
+  color: #5bc0de;
+  position: absolute;
+  right: 15px;
+  top: 41px;
+}
+.add-form .add-groub lable{
+  display: block;
+}
+.all-chek{
+  display: block;
+  margin-right: 10px
+}
+.all-chek .txt{
+  font-size: 17px !important;
+}
+.add-form .add-btn{
+  font-size: 17px;
+  margin: 5px auto;
+  display: block
+}
+@media screen and (max-width: 768px) {
+  .add-form{
+      width: 90%;
+      right: 5%;
+  }
+  .add-form .input{
+      width: 70%;
+  }
+}
+/* end add form */
+
+/*
+======================
+== marks page ==
+======================
+*/
+
+.students-marks .mark{
+  color: #fd0017;
+  font-weight: 900;
+  font-size: 18px;
+  text-shadow: 1px 1px 0px;
+  -webkit-text-shadow: 1px 1px 0px;
+}
+.students-marks .mark-date{
+  color: #3232f1;
+}
+/*
+======================
+== ADD video page ==
+======================
+*/
+
+.activ-form table{
+  width: 100%;
+}
+.activ-form table th .btn{
+  margin: 2px;
+}
+.activ-form table td,
+.activ-form table th{
+  text-align: center;
+}
+.valid-btn{
+  width: 72px !important;
+}
+
+/*/////////////////////////////////////////////////*/

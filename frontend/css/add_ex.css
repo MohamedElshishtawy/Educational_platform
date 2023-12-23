@@ -1,0 +1,189 @@
+/*
+* this file for add exam style
+*/
+.quis-fr .title{
+  text-align: center;
+  color: #7f7f7f;
+  margin: 25px;
+}
+.quis-fr .se-chose{
+  background: #fff;
+  width: 95%;
+  margin: 1px auto;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px;
+  -webkit-box-shadow: 2px 2px 10px;
+  -moz-box-shadow: 2px 2px 10px;
+}
+.quis-fr .se-chose .se-title{
+  font-size: 20px;
+  color: #7f7f7f;
+}
+.quis-fr .se-chose div{
+  margin: 3px 0;
+}
+.quis-fr .exam-mains{
+  background: #fff;
+  width: 95%;
+  margin: 15px auto;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px;
+  -webkit-box-shadow: 2px 2px 10px;
+  -moz-box-shadow: 2px 2px 10px;
+}
+
+.quis-fr .exam-mains .main-title{
+  font-size: 20px;
+  color: #7f7f7f;
+}
+.quis-fr .exam-mains label{
+  font-size: 17px;
+}
+.quis-fr .exam-mains label,
+.quis-fr .exam-mains input{
+  display: block;
+  margin: 3px 0;
+}
+.quis-fr .input{
+  width: 50%;
+  margin-right: 16px;
+}
+.input-num{
+  width: 69px !important;
+  margin: 0 8px !important;
+}
+@media screen and (max-width: 650px) {
+  .quis-fr .input{
+      width: 90%;
+  }
+  .input-num{
+    width: 69px;
+  }
+}
+.quis-fr .exam-mains div{
+  position: relative;
+}
+.quis-fr .exam-mains .icons{
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  font-size: 19px;
+}
+.quis-fr .exam-div{
+  background: rgb(255, 255, 255);
+  width: 95%;
+  margin: 15px auto;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px;
+  -webkit-box-shadow: 2px 2px 10px;
+  -moz-box-shadow: 2px 2px 10px;
+}
+.quis-fr .exam-div .ex{
+  padding: 1px 15px;
+}
+.quis-fr .exam-div .ex .counter-ol{
+  padding: 0;
+}
+.quis-fr .exam-div .ex .counter-ol li{
+  font-size: 16px
+}
+.quis-fr .exam-div .add-qustion,
+.quis-fr .exam-div .add-ex-btn{
+  padding: 10px 10px 10px 60px;
+  font-size: 17px;
+  display: inline;
+  z-index: 2;
+}
+.quis-fr .exam-div .delet{
+  position: absolute;
+  background: red;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  right: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 2px;
+}
+.delete-btn{
+  margin: 2px auto;
+  width: 98px;
+  padding: 10px 10px 10px 10px;
+  font-size: 17px;
+  display: inline;
+  z-index: 2;
+  top: -27px;
+  right: 186px;
+}
+.quis-fr .exam-div .num-of-qus-inp{
+  width: 38px;
+  color: #5cb85c;
+  border: 0;
+  padding: 4px 0;
+  font-size: 15px;
+  z-index: 5;
+}
+.quis-fr .badge{
+  background: #ffffff;
+  position: relative;
+  right: -61px;
+  z-index: 5;
+}
+.quis-fr .exam-div .num-of-qus-inp:focus,
+.quis-fr .exam-div .add-qustion:focus{
+  outline: 0 !important;
+  border: 0 !important;
+}
+.quis-fr .exam-div .add-ex-btn {
+  padding: 7px;
+  font-size: 17px;
+  display: block;
+  z-index: 2;
+  margin: 0 auto;
+}
+/* exam form */
+#nameEX{
+  text-align: center;
+}
+.q-input{
+  display: block;
+  font-size: 18px;
+  padding: 4px 9px;
+  margin: 10px 0;
+  width: 99% !important;
+}
+.file-input{
+  display: block;
+  margin: 10px auto;
+}
+.a-input,.q-input{
+  width: 70%;
+  margin: 5px 10px;
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+.a-input:focus{
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid !important;
+}
+.true-q-txt{
+  margin: 10px 1px 3px 0;
+}
+.true-ans-div{
+  display: inline;
+  margin: 12px;
+  font-size: 15px;
+}
+.observ-input{
+  width: 180px;
+  background: #ffff2c52;
+}
+@media screen and (max-width: 800px) {
+  
+}

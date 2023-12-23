@@ -1,0 +1,295 @@
+/*
+
+*** Students pages style
+**
+main color #9300ff
+secoundry color #ffa600
+*/
+
+/* start main tags */
+*::selection{
+  background: #0a6cff;
+  color: #fff;
+}
+/* end main tags */
+
+/* my animations */
+
+@keyframes spiner {
+  from{top: 77px}
+  to{top: 60px}
+}
+@keyframes rotateR{
+  from{transform: rotateY(-180deg)}
+  from{transform: rotateY(180deg)}
+}
+
+/* end my animations */
+
+/* start navbar */
+.nav{
+  background: #0a6cff;
+  width: 80%;
+  min-height: 57px;
+  border-radius: 0px 0px 12px 12px;
+  position: fixed;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  box-shadow: 2px 2px 9px;
+  z-index: 100;
+}
+.nav .student-name,
+.nav .page-se{
+  width: 100%;
+  position: absolute;
+  text-align: left;
+  font-size: 19px;
+  top: 11px;
+  left: 14px;
+  color: #fff;
+}
+.nav .page-se{
+  position: relative;
+  right: 14px;
+}
+/* end navbar */
+
+/* start name of brand and img */
+.addr{
+  color: #9300ff;
+}
+.paper-img{
+  width: 100px;
+  display: block;
+  margin: 20px auto;
+  position: relative
+}
+/* end name of brand and img */
+
+/* start the thee btns */
+.group{
+  top: 75px;
+  position: relative;
+}
+.to {
+  width: 30%;
+  background: #0a6cff;
+  min-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+  border-radius: 8px;
+  position: absolute;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px black;
+  -webkit-box-shadow: 2px 2px 10px black;
+  -moz-box-shadow: 2px 2px 10px black;
+}
+.to-1{
+  right: 10%;
+}
+.to-2{
+  left: 10%;
+}
+.to-3{
+  right: 10%;
+  top: 220px
+}
+.to-4{
+  left: 10%;
+  top: 220px
+}
+.to-1{ animation: rotateR .4s 1s}
+.to-2{ animation: rotateR .4s 1.4s}
+.to-3{ animation: rotateR .4s 1.8s}
+.to-4{ animation: rotateR .4s 2.2s}
+.to .se-img{
+  width: 100%;
+  height: 150px;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+.to figcaption{
+  padding: 8px;
+}
+.to:hover{
+  color: #fff;
+  text-decoration: none;
+  background: #ff00ff;
+  transform: rotateZ(10deg)
+}
+/* start footer */
+.footer{
+  background: #1f1f1f;
+  width: 100%;
+  padding: 10px;
+color: #fff;
+position: relative;
+top: 790px;
+}
+.copy{
+  color: #fff;
+  font-size: 15px;
+  text-align: right;
+}
+.my{
+  font-size: 15px;
+  color: #fff;
+  position: absolute;
+  left: 5px;
+}
+/* end footer */
+@media screen and (max-width: 550px){
+  .to {
+      width: 80%;
+      font-size: 19px;
+      position: absolute;
+      right: 10%;
+  }
+  .to-1{ top: 0}
+  .to-2{ top: 170px}
+  .to-3{ top: 340px}
+  .to-4{ top: 510px}
+  .to .se-img{
+      height: 100px;
+  }
+  .to:hover{
+      transform: rotateZ(0)
+  }
+.footer{
+  top: 996px
+}
+
+}
+@media screen and (max-width: 390px){
+.copy,.my{
+  display: block;
+  position: relative;
+  text-align: center;
+  line-height: 24px
+}
+}
+/* end the three btns */
+
+/* start exams page && images name Gallary page */
+.page-title{
+  text-align: center;
+  margin: 10px
+}
+.ex-btn,.img-btn{
+  padding: 5px;
+  height: 50px;
+  text-align: center;
+  margin: 10px 5px;
+  background: #0a6cff;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff !important;
+  line-height: 40px;
+}
+.ex-btn:hover,.img-btn:hover{
+  background: #ff00fa;
+  text-decoration: none;
+  padding: 2px 20px 8px 0px;
+  border-radius: 10px;
+}
+.img-btn{
+  display: block;
+  margin: 10px auto;
+  width: 70%;
+}
+.img-btn-contaner{
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.img-btn:-moz-first-child{
+  margin-top: 30px;
+}
+/* end exams page && images name Gallary page */
+
+/* start video && image page */
+.audio-div,
+.video-div,
+.image-div{
+background: #fbfbfb;
+padding: 8px;
+margin: 15px 0;
+width: 90%;
+position: relative;
+right: 5%;
+border-radius: 15px;
+box-shadow: 2px 2px 8px;
+-webkit-box-shadow: 2px 2px 8px;
+-moz-box-shadow: 2px 2px 8px;
+}
+.audio-div .o-r,
+.video-div .v-r{
+display: block;
+margin: 5px auto;
+}
+.video-div .v-r{
+  width: 70%;
+}
+.image-div img{
+  width: 70%;
+  margin: 0 auto;
+  display: block;
+}
+.container a{
+  display: block;
+  margin: 10px auto;
+  width: 80%;
+  background: #0a6cff;
+  padding: 18px 10px;
+  text-align: center;
+  border-radius: 9px;
+  color: #f4f4f4;
+  font-size: 17px;
+}
+@media screen and (max-width: 992px){
+  .video-div .v-r{
+    width: 100%;
+  }
+  .image-div img{
+    width: 80%;
+  }
+}
+@media screen and (max-width: 500px){
+  .image-div img{
+    width: 90%;
+  }
+}
+@media screen and (max-width: 450px){
+  .audio-div .o-r{
+    width: 70%;
+  }
+  .audio-div,
+  .video-div,
+  .image-div{
+    overflow-x: scroll;
+  }
+  @media screen and (max-width: 530px){
+    .image-div img{
+      width: 100%;
+    }
+  }
+}
+/*
+.audio-div::-webkit-scrollbar{
+  width: 50px;
+  border-radius: 5px; 
+}
+.audio-div::-webkit-scrollbar-track{
+  border-radius: 5px;
+}
+
+.audio-div::-webkit-scrollbar-thumb{
+  background-image: linear-gradient(to bottom , #03153c,#063753,#02132e,#063753);
+}
+/*
+body::-webkit-scrollbar-thumb:hover{
+  background-image: linear-gradient(to bottom , #0c2457,#095079,#112c58,#073c5b);
+}
+/* end video && image page */
