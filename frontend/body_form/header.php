@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
   <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
-  <link rel="stylesheet" href="<?php echo $css.'student-page.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'student.css';?>">
   <?php
   }
   elseif($title=='امتحان'){

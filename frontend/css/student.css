@@ -69,36 +69,24 @@ secoundry color #ffa600
 
 /* start the thee btns */
 .group{
-  top: 75px;
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-evenly;
+  gap: 55px;
+  align-items: start;
+  justify-items: center;
 }
 .to {
-  width: 30%;
+  width: 20em;
   background: #0a6cff;
-  min-height: 40px;
   text-align: center;
   font-size: 18px;
   color: #fff;
   border-radius: 8px;
-  position: absolute;
   cursor: pointer;
   box-shadow: 2px 2px 10px black;
   -webkit-box-shadow: 2px 2px 10px black;
   -moz-box-shadow: 2px 2px 10px black;
-}
-.to-1{
-  right: 10%;
-}
-.to-2{
-  left: 10%;
-}
-.to-3{
-  right: 10%;
-  top: 220px
-}
-.to-4{
-  left: 10%;
-  top: 220px
 }
 .to-1{ animation: rotateR .4s 1s}
 .to-2{ animation: rotateR .4s 1.4s}
@@ -141,16 +129,13 @@ top: 790px;
 }
 /* end footer */
 @media screen and (max-width: 550px){
+  .group{
+    grid-template-columns: 1fr;
+  }
   .to {
       width: 80%;
       font-size: 19px;
-      position: absolute;
-      right: 10%;
   }
-  .to-1{ top: 0}
-  .to-2{ top: 170px}
-  .to-3{ top: 340px}
-  .to-4{ top: 510px}
   .to .se-img{
       height: 100px;
   }
@@ -163,6 +148,9 @@ top: 790px;
 
 }
 @media screen and (max-width: 390px){
+  .group{
+    grid-template-columns: 1fr;
+  }
 .copy,.my{
   display: block;
   position: relative;
@@ -249,6 +237,9 @@ margin: 5px auto;
   font-size: 17px;
 }
 @media screen and (max-width: 992px){
+  .group{
+    grid-template-columns: 1fr;
+  }
   .video-div .v-r{
     width: 100%;
   }
