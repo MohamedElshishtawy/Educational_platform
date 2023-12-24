@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
   <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
-  <link rel="stylesheet" href="<?php echo $css.'mr_style.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'mr.css';?>">
   <link rel="stylesheet" href="<?php echo $css.'add_ex.css';?>">
   <?php
   }

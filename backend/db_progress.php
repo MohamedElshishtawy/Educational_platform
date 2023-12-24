@@ -1,4 +1,6 @@
 <?php
+
+// use backend\models\Code;
 /* 
 ---------------------------
 *** DB progreser page
@@ -242,6 +244,32 @@ if (isset($_POST['edit_student'])) {
   }
 }
 /* end edit student */
+
+/*////////////////////////////////////////////////////////*/
+
+/** Start Generate Code */
+if ( isset($_POST['generate_code1']) ){
+  $se = $_POST['generate_code1'];
+  $code = $_POST['code1'];
+  $password = random_int(100, 2000);
+  $code_db = $db->prepare("INSERT INTO codes (code, password, se) VALUES (?, ? ,?)");
+  $code_db->execute(array($code, $password, $se));
+}
+if ( isset($_POST['generate_code2']) ){
+  $se = $_POST['generate_code2'];
+  $code = $_POST['code2'];
+  $password = random_int(100, 2000);
+  $code_db = $db->prepare("INSERT INTO codes (code, password, se) VALUES (?, ? ,?)");
+  $code_db->execute(array($code, $password, $se));
+}
+if ( isset($_POST['generate_code3']) ){
+  $se = $_POST['generate_code3'];
+  $code = $_POST['code3'];
+  $password = random_int(100, 2000);
+  $code_db = $db->prepare("INSERT INTO codes (code, password, se) VALUES (?, ? ,?)");
+  $code_db->execute(array($code, $password, $se));
+}
+/** End Generate Code */
 
 /*////////////////////////////////////////////////////////*/
 

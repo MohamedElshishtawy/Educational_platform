@@ -71,6 +71,19 @@ function select2($selection,$from,$where,$val,$eals='',$error=false) {
 -- [select] Function reterns $rows
 -- $rows -> rows data for the selection
 */
+function select_info_no_where($selections,$table,$error_ms=false) {
+  global $db;
+  
+  $select_procc = $db->prepare("SELECT $selections FROM $table  ");
+  $select_procc->execute();
+  if ( $select_procc->rowCount() > 0 ){
+  $rows = $select_procc->fetchAll(PDO::FETCH_ASSOC);
+  return $rows;
+  }
+  
+  return $error_ms;
+  
+}
 function select_info($selections,$table,$condition_field,$condition,$else='',$error_ms=false) {
   global $db;
   

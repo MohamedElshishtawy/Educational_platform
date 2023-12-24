@@ -49,4 +49,7 @@ $fontawesome_css = 'frontend/lib/font_awesome/css/all.min.css';
 $fontawesome_js = 'frontend/lib/font_awesome/js/all.min.js';
 $jquery       = 'frontend/lib/jquery/jquery-3.5.1.min.js';
 /* end links for front end */
+
+// Models
+$model__Code = "backend/Code.php";
 ?>

@@ -270,6 +270,27 @@ td .btn{
 }
 /* end add form */
 
+/*/////////////////////////////////////////////////*/
+
+/*
+======================
+== ADD Code page ==
+======================
+*/
+.add-code-g{
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+  gap: 10px;
+}
+.code-inp{
+  height: 33px;
+  border-radius: 4px !important;
+  border: 1px solid #aaa;
+  padding: 8px 10px !important;
+  margin-top: 5px;
+}
+
 /*
 ======================
 == marks page ==
