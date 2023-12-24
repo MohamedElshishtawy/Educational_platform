@@ -106,6 +106,76 @@ if (isset($_POST['log_btn'])) {
 }
 /* end log in page */
 
+
+/** Start log in with code */
+
+if ( isset( $_POST['log_code'] ) ){
+    if (isset($_SESSION['phone']) && isset($_SESSION['id'])) {
+      //if he is student
+      if ($_SESSION['state'] == '10' /*student*/) {
+          //go to your page
+          if ($_SESSION['se'] == '1se') {
+              $to_1 = 'location: 1secoundry.php?id=' . $_SESSION['id'];
+              header($to_1);
+              exit();
+          } elseif ($_SESSION['se'] == '2se') {
+              $to_2 = 'location: 2secoundry.php?id=' . $_SESSION['id'];
+              header($to_2);
+              exit();
+          } elseif ($_SESSION['se'] == '3se') {
+              $to_3 = 'location: 3secoundry.php?id=' . $_SESSION['id'];
+              header($to_3);
+              exit();
+          } else {
+              session_unset();
+              session_destroy();
+              header('location: index.php');
+              exit();
+          }
+      }
+      //if he is damin
+      elseif ($_SESSION['state'] == '11' /*admin*/) {
+          header('location: mr.php');
+          exit();
+      }
+  }
+  //if you don't have session
+  else {
+    if (isset($_POST['code']) && isset($_POST['password'])) {
+
+        //get name and password
+        $bad_phone = $_POST['code'];
+        $bad_password = $_POST['password'];
+
+        //filter name and password
+        $bad_phone_f = filter_var($bad_phone, FILTER_SANITIZE_NUMBER_INT);
+        $code = filt($bad_phone_f);
+
+        $bad_password_f = filter_var($bad_password, FILTER_SANITIZE_STRING);
+        $password = filt($bad_password_f);
+
+        //select data base
+        $select = $db->prepare("SELECT * FROM codes WHERE code = ? && password = ? ");
+
+        //fill the ? and excute
+        $select->execute(array($code, $password));
+
+        //if student is here
+        if ($select->rowCount() > 0) {
+          $code_data = $select->fetchAll(PDO::FETCH_ASSOC);
+          redirect_wtih_post('set_account.php', $code_data[0]['id']);
+          
+        }else{
+          // Error Message
+        }
+    }
+  }
+}
+
+
+
+/** End log in with code */
+
 /*//////////////////////////////////////////////////*/
 
 /* start back botton */

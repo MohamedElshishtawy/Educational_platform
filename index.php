@@ -75,6 +75,9 @@ else {
       <div class="sign-in-div text-center">
           <a href="sign-up.php" class="sign-up">عمل حساب جديد</a>
         </div>
+        <div class="sign-in-div text-center">
+          <a href="code-log.php" class="sign-up">التسجيل بالكود</a>
+        </div>
     </div>
   </form>
 	<footer class="footer">

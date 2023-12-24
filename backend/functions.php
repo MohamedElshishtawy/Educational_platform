@@ -208,4 +208,30 @@ function if_here_echo($var) {
     return '';
   }
 }
+
+
+/** Redirect with Post 24/12/2023
+ * Input: 
+ *  - URL you want to visit
+ *  - Data* you want to save in the post
+ * Note: the kry of the post will be numbers
+ */
+function redirect_wtih_post($url, ...$data){
+  // Data
+  $postData = [];
+  $n = 0;
+
+  foreach($data as $info){
+    $postData[$n++] = $info;
+  }
+
+  // Redirect to another page with POST data
+  echo '<form id="redirectForm" action="'.$url.'" method="post">';
+  foreach ($postData as $key => $value) {
+      echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+  }
+  echo '</form>';
+  echo '<script>document.getElementById("redirectForm").submit();</script>';
+  exit();
+}
 ?>

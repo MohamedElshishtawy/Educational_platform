@@ -11,6 +11,12 @@ ob_start();
 
 session_start();
 
+// is make a code
+if ($_SERVER['REQUEST_METHOD'] != 'POST'){
+    header("location: index.php");
+    exit();
+}
+
 //if he has session
 if ( isset($_SESSION['phone']) && isset($_SESSION['id']) ) {
   //if he is student
@@ -54,8 +60,11 @@ else {
   $title = 'Sign In | التعليم في أي ظروف';
   include_once $header;
   
+  $code = select_info("*", "codes", "id", $_POST["0"]) ;
+  $code = $code[0];
+
   $submit = false; // I use it to echo proccess cases when submit
-  if ( isset($_POST['sign_in']) ) {
+  if ( isset($_POST['sign_in_code']) ) {
     $submit = true;
     $user_name       = filter_var($_POST['user_arabic_name'], FILTER_SANITIZE_STRING);
     $user_phone      = filter_var($_POST['user_phone'], FILTER_SANITIZE_NUMBER_INT);
@@ -126,6 +135,11 @@ else {
     if ( empty($sign_err_array) ) {
       $is_phone_here = select_info('phone','students','phone',$user_phone);
       if ( $is_phone_here == false ) {
+        echo "Good";
+        // delete the code
+        $delete = $db->prepare("DELETE FROM codes WHERE id = ?");
+        $delete->execute(array($code[0]['id']));
+        // Insert the user to db
         $insert_info = $db->prepare("INSERT INTO students(id,ar_name,phone,password,money,se,state,groub) VALUES(?,?,?,?,?,?,?,?)");
         $insert_process = $insert_info->execute(array($user_id,$user_name,$user_phone,$user_password_1,'0',$user_se,'10',$user_groub));
         echo $user_id . '<br>' . $user_se;
@@ -149,7 +163,7 @@ else {
 
   ?>
   <form action="" method="post" class="sign-form">
-    <h2 class="text-center t1">التعليم في أي ظروف</h2>
+    <h2 class="text-center t1">Code: <?= $code['code'] ?></h2>
     <div class="back"></div>
     <div class='sign-div'>
       <h1 class="text-center">حساب جديد</h1>
@@ -219,7 +233,7 @@ else {
         </select>
       </div>
       <br>
-      <button type="submit" name="sign_in" id="log" class="btn btn-info btn-md">تسجيل الحساب <i class="fa fa-sign-in-alt fa-fw"></i></button>
+      <button type="submit" name="sign_in_code" id="log" class="btn btn-info btn-md">تسجيل الحساب <i class="fa fa-sign-in-alt fa-fw"></i></button>
       <div class="sign-in-div text-center">
           <a href="index.php" class="sign-in">لدي حساب بالفعل</a>
       </div>
