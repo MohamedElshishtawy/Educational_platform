@@ -17,6 +17,12 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
 
   date_default_timezone_set('Africa/Cairo');
 
+
+  $exam_data = $db->prepare("SELECT * FROM exams WHERE exam_name = ?");
+  $exam_data->execute(array($exam_name));
+  $exam_data = $exam_data->fetchAll(PDO::FETCH_ASSOC);
+  $exam_id = $exam_data[0]["id"];
+  
   echo '<br><br><br><h2 class="text-center" id="examHeader">' . str_replace('_',' ',$exam_name) . '</h2><br>';
 
   //start student click end
@@ -34,19 +40,9 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
 
     $student_answers = array();
   
-    
+
     for ($ques = 0; $ques < count($exam1); $ques += 5) {
-      echo '<div class="all-q">';
-      echo '<div class="qustion">' . $exam1[$ques] . '</div>';
-      if (!$exam1[$ques + 3] == '') {
-        if ($exam_se == '1se') {
-          echo '<img src="../examph/1/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
-          } elseif ($exam_se == '2se') {
-          echo '<img src="../examph/2/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
-          } elseif ($exam_se == '3se') {
-          echo '<img src="../examph/3/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
-          }
-      }
+      
       $ans_round = 'q' . $ans_count;
       
       if ( isset($_POST[$ans_round]) ) {
@@ -54,56 +50,27 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
       } else {
         $answer_you_choese = '';
       }
+
       // store the answer
       $student_answers[$ans_count] = $answer_you_choese;
 
       //if answer of the qustio is correct
       if ($answer_you_choese == $exam1[$ques + 2]) {
         $score++;
-        //palce all ansers but the true will be green background
-        for ($ans = 0; $ans < count($exam1[$ques + 1]); $ans++) {
-          //select good ans you chose
-          if ('a' . $ans == $answer_you_choese) {
-            echo '<span class="ans true">' . $exam1[$ques + 1][str_replace('a', '', $answer_you_choese)] . '</span>';
-          } else {
-            echo '<span class="ans">' . $exam1[$ques + 1][$ans] . '</span>';
-          }
-        }
       }
-
-      //if answer you chose is wrrong
-      else {
-
-        //palce all ansers the true will be yellow background and wrrong will be red
-        for ($ans = 0; $ans < count($exam1[$ques + 1]); $ans++) {
-
-          //select wrrong ans you chose
-          if ('a' . $ans == $answer_you_choese) {
-            echo '<span class="ans wrrong">' . $exam1[$ques + 1][str_replace('a', '', $answer_you_choese)] . '</span>';
-          } elseif ('a' . $ans == $exam1[$ques + 2]) {
-            echo '<span class="ans the_true">' . $exam1[$ques + 1][str_replace('a', '', $exam1[$ques + 2])] . '</span>';
-          } else {
-            echo '<span class="ans">' . $exam1[$ques + 1][$ans] . '</span>';
-          }
-        }
-      }
-      if (!$exam1[$ques + 4] == '') {
-        echo '<br><div class="alert alert-warning">*ملحوظة: <br>' . $exam1[$ques + 4] . '</div>';
-      }
-      echo '</div>';
 
       $ans_count++;
     }
 
+    // prepare deg for DB
+    $deg = $score . ' / ' . $ans_count ;
+    $save_deg = $db->prepare("INSERT INTO degrees (student_id, exam_id, degree) 
+                                          VALUES (? , ? , ?)");
+    $save_deg->execute(array($student_id, $exam_id, $deg));
+
     // upload file for answers
     saveAnswersFile($student_id, $exam_name,$exam_se, $student_answers);
 
-    // place a btn [to go index] && the score he had
-    echo '<form method="post" action="../../"><button type="submit" class="btn btn-info text-center"><i class="fa fa-thumbs-up"></i> حسنا</button></form>';
-    echo '<hr>';
-    echo '<h2 class="text-center">' . 'الدرجة: ' . $score . ' من ' . $ans_count . '</h2><br><br>';
-    // prepare deg for DB
-    $deg = $score . ' / ' . $ans_count . ' @ ' . date('d-m-Y h:i:s');
 
     if (!$time_you_have == 0 || !$time_you_have == '') {
       // place his score in DB progres
@@ -159,11 +126,6 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
             }
             $place_the_visit_update->execute();
             
-
-            // echo message about his degree
-            $show_deg = strstr($field_data, '@', true);
-            echo '<span class="alert alert-info" style="position:absolute;top:10px;right:5px">لقد حللت الامتحان من قبل والدرجة كانت: ' . $show_deg . '</span>';
-            
           }
         }
       }
@@ -182,8 +144,10 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
       }
 
     }
-    // Open the exam
+    header("location: /index.php");
+    exit();
   } else {
+    // Open the exam
     // if your http referer is incloude to="exams" => open the exam to solute
     // Or incloud exam name
     if(isset($_SERVER['HTTP_REFERER'])){

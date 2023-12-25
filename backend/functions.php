@@ -281,7 +281,7 @@ function set_session_redirect($id,$phone,$money,$se,$code,$state){
   
 }
 
-function saveAnswersFile($studentID, $examID,$se, $answers) {
+function saveAnswersFile ($studentID, $examID,$se, $answers) {
   // Define the base directory
   $baseDir = '../answers/'.$se[0];
 
@@ -325,5 +325,76 @@ function getAnswers($studentID, $examID, $se) {
   return $answers;
 }
 
-function showExamAnsers(){}
+function showExamAnsers($exam1, $exam_se,$db){
+  // delete answers info
+    echo '<script>localStorage.clear();</script>';
+
+    // delet his time history
+    $student_id = $_SESSION['id'];
+    $score = 0;
+    $ans_count = 0;
+
+  for ($ques = 0; $ques < count($exam1); $ques += 5) {
+      echo '<div class="all-q">';
+      echo '<div class="qustion">' . $exam1[$ques] . '</div>';
+      if (!$exam1[$ques + 3] == '') {
+        if ($exam_se == '1se') {
+          echo '<img src="../examph/1/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+          } elseif ($exam_se == '2se') {
+          echo '<img src="../examph/2/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+          } elseif ($exam_se == '3se') {
+          echo '<img src="../examph/3/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+          }
+      }
+      $ans_round = 'q' . $ans_count;
+      
+      if ( isset($_POST[$ans_round]) ) {
+        $answer_you_choese = filter_var($_POST[$ans_round], FILTER_SANITIZE_STRING);
+      } else {
+        $answer_you_choese = '';
+      }
+      // store the answer
+      $student_answers[$ans_count] = $answer_you_choese;
+
+      //if answer of the qustio is correct
+      if ($answer_you_choese == $exam1[$ques + 2]) {
+        $score++;
+        //palce all ansers but the true will be green background
+        for ($ans = 0; $ans < count($exam1[$ques + 1]); $ans++) {
+          //select good ans you chose
+          if ('a' . $ans == $answer_you_choese) {
+            echo '<span class="ans true">' . $exam1[$ques + 1][str_replace('a', '', $answer_you_choese)] . '</span>';
+          } else {
+            echo '<span class="ans">' . $exam1[$ques + 1][$ans] . '</span>';
+          }
+        }
+      }
+
+      //if answer you chose is wrrong
+      else {
+
+        //palce all ansers the true will be yellow background and wrrong will be red
+        for ($ans = 0; $ans < count($exam1[$ques + 1]); $ans++) {
+
+          //select wrrong ans you chose
+          if ('a' . $ans == $answer_you_choese) {
+            echo '<span class="ans wrrong">' . $exam1[$ques + 1][str_replace('a', '', $answer_you_choese)] . '</span>';
+          } elseif ('a' . $ans == $exam1[$ques + 2]) {
+            echo '<span class="ans the_true">' . $exam1[$ques + 1][str_replace('a', '', $exam1[$ques + 2])] . '</span>';
+          } else {
+            echo '<span class="ans">' . $exam1[$ques + 1][$ans] . '</span>';
+          }
+        }
+      }
+      if (!$exam1[$ques + 4] == '') {
+        echo '<br><div class="alert alert-warning">*ملحوظة: <br>' . $exam1[$ques + 4] . '</div>';
+      }
+      echo '</div>';
+
+      $ans_count++;
+    }
+    // place a btn [to go index] && the score he had
+    echo '<form method="post" action="../../"><button type="submit" class="btn btn-info text-center"><i class="fa fa-thumbs-up"></i> حسنا</button></form>';
+    echo '<hr>';
+}
 ?>
