@@ -32,6 +32,9 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
     $score = 0;
     $ans_count = 0;
 
+    $student_answers = array();
+  
+    
     for ($ques = 0; $ques < count($exam1); $ques += 5) {
       echo '<div class="all-q">';
       echo '<div class="qustion">' . $exam1[$ques] . '</div>';
@@ -51,6 +54,9 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
       } else {
         $answer_you_choese = '';
       }
+      // store the answer
+      $student_answers[$ans_count] = $answer_you_choese;
+
       //if answer of the qustio is correct
       if ($answer_you_choese == $exam1[$ques + 2]) {
         $score++;
@@ -88,6 +94,9 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
 
       $ans_count++;
     }
+
+    // upload file for answers
+    saveAnswersFile($student_id, $exam_name,$exam_se, $student_answers);
 
     // place a btn [to go index] && the score he had
     echo '<form method="post" action="../../"><button type="submit" class="btn btn-info text-center"><i class="fa fa-thumbs-up"></i> حسنا</button></form>';

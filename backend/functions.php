@@ -280,4 +280,50 @@ function set_session_redirect($id,$phone,$money,$se,$code,$state){
   }
   
 }
+
+function saveAnswersFile($studentID, $examID,$se, $answers) {
+  // Define the base directory
+  $baseDir = '../answers/'.$se[0];
+
+  // Create the exam directory if it doesn't exist
+  $examDir = $baseDir . '/' . $examID;
+  if (!file_exists($examDir)) {
+      mkdir($examDir, 0777, true); // 0777 provides full permissions, adjust as needed
+  }
+
+  // Create the student's file
+  $studentFile = $examDir . '/' . $studentID . '.php';
+
+  // Serialize and save the answers to the file
+  $serializedAnswers = serialize($answers);
+  file_put_contents($studentFile, '<?php return \'' . addslashes($serializedAnswers) . '\';');
+
+  // echo "Answers for Student ID $studentID in Exam ID $examID have been saved successfully.";
+  return true;
+}
+function getAnswers($studentID, $examID, $se) {
+  // Define the base directory
+    $baseDir = '../answers/'.$se[0];
+
+
+  // Check if the exam directory exists
+  $examDir = $baseDir . '/' . $examID;
+  if (!file_exists($examDir)) {
+      return null; // Exam directory doesn't exist
+  }
+
+  // Check if the student's file exists
+  $studentFile = $examDir . '/' . $studentID . '.php';
+  if (!file_exists($studentFile)) {
+      return null; // Student's file doesn't exist
+  }
+
+  // Read and unserialize the answers from the file
+  $serializedAnswers = file_get_contents($studentFile);
+  $answers = unserialize(stripslashes(substr($serializedAnswers, 12, -2))); // Remove '<?php return ' and ';'
+
+  return $answers;
+}
+
+function showExamAnsers(){}
 ?>
