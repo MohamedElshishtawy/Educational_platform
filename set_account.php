@@ -12,8 +12,8 @@ ob_start();
 session_start();
 
 // is make a code
-if ($_SERVER['REQUEST_METHOD'] != 'POST'){
-    header("location: index.php");
+if (!isset($_GET['code_id'])){
+    header("location: code-log.php");
     exit();
 }
 
@@ -40,7 +40,7 @@ if ( isset($_SESSION['phone']) && isset($_SESSION['id']) ) {
     else{
       session_unset();
       session_destroy();
-      header('location: index.php');
+      header("location: code-log.php");
       exit();
     }
   }
@@ -57,12 +57,12 @@ else {
   include_once $connect ;
   include_once $functions;
 
-  $title = 'Sign In | التعليم في أي ظروف';
+  $title = 'Sign In | المفيد فى الفزياء';
   include_once $header;
   
-  $code = select_info("*", "codes", "id", $_POST["0"]) ;
-  $code = $code[0];
+  $code = select_info("*", "codes", "code", $_GET['code_id']) ;
 
+  var_dump($code);
   $submit = false; // I use it to echo proccess cases when submit
   if ( isset($_POST['sign_in_code']) ) {
     $submit = true;
@@ -135,20 +135,20 @@ else {
     if ( empty($sign_err_array) ) {
       $is_phone_here = select_info('phone','students','phone',$user_phone);
       if ( $is_phone_here == false ) {
-        echo "Good";
         // delete the code
         $delete = $db->prepare("DELETE FROM codes WHERE id = ?");
         $delete->execute(array($code[0]['id']));
         // Insert the user to db
-        $insert_info = $db->prepare("INSERT INTO students(id,ar_name,phone,password,money,se,state,groub) VALUES(?,?,?,?,?,?,?,?)");
-        $insert_process = $insert_info->execute(array($user_id,$user_name,$user_phone,$user_password_1,'0',$user_se,'10',$user_groub));
+        $insert_info = $db->prepare("INSERT INTO students(id,ar_name,phone,password,money,se,code,state,groub) VALUES(?,?,?,?,?,?,?,?,?)");
+        $insert_process = $insert_info->execute(array($user_id,$user_name,$user_phone,$user_password_1,$code[0]['activate'],$user_se,$code[0]['code'],'10',$user_groub));
         echo $user_id . '<br>' . $user_se;
         if( $insert_process ) {
           // set sessions
           $_SESSION['id']    = $user_id;
           $_SESSION['phone']  = $user_phone;
-          $_SESSION['money']  = '0';
+          $_SESSION['money']  = $code[0]['activate'];
           $_SESSION['se']    = $user_se;
+          $_SESSION['code']    = $code[0]['code'];
           $_SESSION['state'] = '10';
           $location = $user_se . 'coundry.php';
           header('location: '.$location);
@@ -160,10 +160,10 @@ else {
       }
     }
   }
-
+  var_dump($code);
   ?>
   <form action="" method="post" class="sign-form">
-    <h2 class="text-center t1">Code: <?= $code['code'] ?></h2>
+    <h2 class="text-center t1">Code: <?= $code[0]['code'] ?></h2>
     <div class="back"></div>
     <div class='sign-div'>
       <h1 class="text-center">حساب جديد</h1>
@@ -234,12 +234,6 @@ else {
       </div>
       <br>
       <button type="submit" name="sign_in_code" id="log" class="btn btn-info btn-md">تسجيل الحساب <i class="fa fa-sign-in-alt fa-fw"></i></button>
-      <div class="sign-in-div text-center">
-          <a href="index.php" class="sign-in">لدي حساب بالفعل</a>
-      </div>
-      <div class="sign-in-div text-center">
-        <a href="code-log.php" class="sign-up">التسجيل بالكود</a>
-      </div>
     </div>
   </form>
 	<footer class="sign-footer">
@@ -251,4 +245,5 @@ else {
   include_once $footer;
 }
 ob_end_flush();
+
 ?>

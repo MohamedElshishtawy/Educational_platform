@@ -1,5 +1,5 @@
 <?php
-  if($title=='التعليم في أي ظروف'){
+  if($title=='المفيد فى الفزياء'){
   ?>
   <script src="<?php echo $jquery;?>"></script>
   <script src="<?php echo $bootstrap_js;?>"></script>
@@ -7,7 +7,7 @@
   <script src="<?php echo $js.'all.js';?>"></script>
   <?php
   }
-  elseif($title=="Sign In | التعليم في أي ظروف"){
+  elseif($title=="Sign In | المفيد فى الفزياء"){
   ?>
   <script src="<?php echo $jquery;?>"></script>
   <script src="<?php echo $bootstrap_js;?>"></script>

@@ -346,12 +346,12 @@ if ( isset($_SESSION['phone']) && isset($_SESSION['id']) && $_SESSION['id'] == '
     else {
       session_unset();
       session_destroy();
-      header('location: index.php');
+      header("location: code-log.php");
       exit();
     }
   }
 else{
-    header('location: index.php');
+    header("location: code-log.php");
     exit();
 }
 ob_end_flush();

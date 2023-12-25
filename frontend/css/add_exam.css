@@ -54,6 +54,13 @@
   width: 69px !important;
   margin: 0 8px !important;
 }
+.date-input{
+  border-radius: 5px;
+  padding: 8px;
+  border: 1px solid;
+  border-top: 0;
+  border-left-width: 2px;
+}
 @media screen and (max-width: 650px) {
   .quis-fr .input{
       width: 90%;

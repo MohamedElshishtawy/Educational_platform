@@ -31,7 +31,7 @@ if ( isset($_SESSION['name']) && isset($_SESSION['id']) ) {
     else{
       session_unset();
       session_destroy();
-      header('location: index.php');
+      header("location: code-log.php");
       exit();
     }
   }

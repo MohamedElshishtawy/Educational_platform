@@ -234,4 +234,50 @@ function redirect_wtih_post($url, ...$data){
   echo '<script>document.getElementById("redirectForm").submit();</script>';
   exit();
 }
+
+
+
+function set_session_redirect($id,$phone,$money,$se,$code,$state){
+  $_SESSION['id']    = $id;
+  $_SESSION['phone']  = $phone;
+  $_SESSION['money']  = $money;
+  $_SESSION['se']    = $se;
+  $_SESSION['code']    = $code;
+  $_SESSION['state'] = $state;
+  //if is student
+  if ($_SESSION['state'] == '10') {
+
+      //go to your page
+      if ($_SESSION['se'] == '1se') {
+        $to_1 = 'location: 1secoundry.php?id=' . $_SESSION['id'];
+        header($to_1);
+        exit();
+      } elseif ($_SESSION['se'] == '2se') {
+        $to_2 = 'location: 2secoundry.php?id=' . $_SESSION['id'];
+        header($to_2);
+        exit();
+      } elseif ($_SESSION['se'] == '3se') {
+        $to_3 = 'location: 3secoundry.php?id=' . $_SESSION['id'];
+        header($to_3);
+        exit();
+      } else {
+        session_unset();
+        session_destroy();
+        header("location: code-log.php");
+        exit();
+      }
+  }
+  // if is admin
+  elseif ($_SESSION['state'] == '11' && $_SESSION['id'] == '18542') {
+    $to_ad = 'location: mr.php';
+    header($to_ad);
+    exit();
+  } else {
+      session_unset();
+      session_destroy();
+      header("location: code-log.php");
+      exit();
+  }
+  
+}
 ?>

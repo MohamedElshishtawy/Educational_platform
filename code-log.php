@@ -3,7 +3,7 @@
 ----------------------------
 *** index page
 ** if you don't have a session will open
-** if you have a session return for [ admin || *secondry.php ]
+** if you have a session return for [ admin || *secoundry.php ]
 ----------------------------
 */
 session_start();
@@ -14,21 +14,21 @@ if (isset($_SESSION['phone']) && isset($_SESSION['id'])) {
     if ($_SESSION['state'] == '10'/*student*/) {
         // Go to your page
         if ($_SESSION['se'] == '1se') {
-            $to_1 = 'location: 1secondry.php?id=' . $_SESSION['id'];
+            $to_1 = 'location: 1secoundry.php?id=' . $_SESSION['id'];
             header($to_1);
             exit();
         } elseif ($_SESSION['se'] == '2se') {
-            $to_2 = 'location: 2secondry.php?id=' . $_SESSION['id'];
+            $to_2 = 'location: 2secoundry.php?id=' . $_SESSION['id'];
             header($to_2);
             exit();
         } elseif ($_SESSION['se'] == '3se') {
-            $to_3 = 'location: 3secondry.php?id=' . $_SESSION['id'];
+            $to_3 = 'location: 3secoundry.php?id=' . $_SESSION['id'];
             header($to_3);
             exit();
         } else {
             session_unset();
             session_destroy();
-            header('location: index.php');
+            header("location: code-log.php");
             exit();
         }
     }
@@ -46,18 +46,18 @@ else {
     include_once $functions;
     include_once $db_prog;
 
-    $title = 'التعليم في أي ظروف';
+    $title = 'المفيد فى الفزياء';
     include_once $header;
     ?>
     <form action="" method="post" class="log-form" onsubmit="makePostRequest(); return false;">
-        <h2 class="text-center t1">التعليم في أي ظروف</h2>
         <div class="back"></div>
+        <h1 class="text-center t1">تسجيل االدخول</h1>
         <div class='log-div'>
-            <h1 class="text-center">تسجيل بالكود</h1>
+            <h2 class="text-center ">المفيد فى الفزياء</h2>
             <img src="<?php echo $imges . 'tt.svg' ?>" class="img" alt="book and pin img">
             <div class="name-filed require">
-                <div class="txt">الكود</div>
-                <input type="text" id="input1" class="input" name="code" placeholder="ادخل هنا الكود...">
+                <div class="txt">كود الطالب</div>
+                <input type="text" id="input1" class="input" name="code" placeholder="ادخل كود الطالب...">
                 <i class="fa fa-phone icon-1"></i>
             </div>
             <div class="pass-field require">
@@ -69,18 +69,18 @@ else {
             </div>
             <br> 
             <button type="submit" name="log_code" class="btn btn-info btn-md">سجل <i class="fa fa-sign-in-alt"></i></button>
-            <div class="sign-in-div text-center">
+            <!-- <div class="sign-in-div text-center">
                 <a href="sign-up.php" class="sign-up">عمل حساب جديد</a>
             </div>
             <div class="sign-in-div text-center">
                 <a href="index.php" class="sign-up">لديك حساب</a>
-            </div>
+            </div> -->
         </div>
     </form>
 
     <footer class="footer">
-        <span class="my">BY => &hearts; <a href="#">Mohamed Elshishtawy</a></span>
-        <span class="copy">all right are reserved &copy; 2021</span>
+        <span class="my">BY => &hearts; <a href="https://5dmaty.com/">5dmaty</a></span>
+        <span class="copy">all right are reserved &copy; 2023</span>
     </footer>
 
     <!-- <script>

@@ -67,7 +67,7 @@ body{
 .feild-6{ background: #00a7ff;margin: 15px 9% 15px 10%;animation: rotateR .4s 3.5s}
 .feild-7{ background: #9100ff;margin: 15px 11% 15px 9%;animation: rotateR .4s 3.9s}
 .feild-8{ background: #e2bd0a;margin: 15px 9% 15px 10%;animation: rotateR .4s 4.3s}
-.feild-9{ background: #0066ff;margin: 15px 35% 15px 35%;animation: rotateR .4s 4.7s}
+.feild-9{ background: #0066ff;margin: 15px 35% 15px 35%;animation: rotateR .4s 3.9s}
 .fields:hover{
   box-shadow			: 2px 2px 10px #000;
   -webkit-box-shadow  : 2px 2px 10px #000;

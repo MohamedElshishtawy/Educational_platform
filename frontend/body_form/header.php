@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $title; ?></title>
   <?php
-  if($title=='التعليم في أي ظروف'){
+  if($title=='المفيد فى الفزياء'){
   ?>
   <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="<?php echo $css . 'log-page.css' ?>">
   <?php
   }
-  elseif($title=="Sign In | التعليم في أي ظروف"){
+  elseif($title=="Sign In | المفيد فى الفزياء"){
     ?>
     <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
     <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
   <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
-  <link rel="stylesheet" href="<?php echo $css.'mr.css';?>">
-  <link rel="stylesheet" href="<?php echo $css.'add_ex.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'mr1.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'add_exam.css';?>">
   <?php
   }
   elseif($title=='الصف الأول الثانوي'||$title=='الصف الثاني الثانوي'||$title=='الصف الثالث الثانوي'){

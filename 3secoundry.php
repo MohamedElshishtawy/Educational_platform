@@ -4,7 +4,6 @@
 ob_start();
 
 session_start();
-
 include_once 'init.php';
 
 include_once $connect;
@@ -29,7 +28,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
   if ($here == 0) {
     session_unset();
     session_destroy();
-    header('location: index.php');
+    header("location: code-log.php");
     exit();
   }
   //if his id is in our db
@@ -50,8 +49,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
     <div class="br"><br></div>
 
     <div class="text-center addr">
-      <h2>MOHAMED</h2>
-      <h2>التعليم في أي ظروف</h2>
+      <h2>المفيد فى الفزياء</h2>
     </div>
 
     <img src="<?php echo $imges . 'test.svg' ?>" class="paper-img">
@@ -214,7 +212,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
           echo '<h2 class="page-title">' . 'ركن الأمتحنات' . '</h2>';
 
           // get all exams in db
-          $exams_db = select2('exam_name','exams','vilablility','1',' && se = "3se"');
+          $exams_db = select2('exam_name','exams','vilablility','1',' && se = "3se"  && start_date <= now() && end_date > now()');
           if ( $exams_db != false ) {
             // prepare exams name for compare
             $edited_exams_db = array(); // array for eams name with ".php"
@@ -310,7 +308,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
         }
       }
     } else {
-      header('location: index.php');
+      header("location: code-log.php");
     }
 
 
@@ -318,7 +316,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
     /* end the page */
   }
 } else {
-  header('location: index.php');
+  header("location: code-log.php");
   exit();
 }
 

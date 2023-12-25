@@ -34,7 +34,7 @@ if ( isset($_SESSION['phone']) && isset($_SESSION['id']) ) {
     else{
       session_unset();
       session_destroy();
-      header('location: index.php');
+      header("location: code-log.php");
       exit();
     }
   }
@@ -51,7 +51,7 @@ else {
   include_once $connect ;
   include_once $functions;
 
-  $title = 'Sign In | التعليم في أي ظروف';
+  $title = 'Sign In | المفيد فى الفزياء';
   include_once $header;
   
   $submit = false; // I use it to echo proccess cases when submit
@@ -149,7 +149,7 @@ else {
 
   ?>
   <form action="" method="post" class="sign-form">
-    <h2 class="text-center t1">التعليم في أي ظروف</h2>
+    <h2 class="text-center t1">المفيد فى الفزياء</h2>
     <div class="back"></div>
     <div class='sign-div'>
       <h1 class="text-center">حساب جديد</h1>

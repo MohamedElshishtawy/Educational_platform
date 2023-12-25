@@ -31,7 +31,7 @@ if ( isset($_SESSION['phone']) && isset($_SESSION['id']) ) {
     else{
       session_unset();
       session_destroy();
-      header('location: index.php');
+      header("location: code-log.php");
       exit();
     }
   }
@@ -49,11 +49,11 @@ else {
   include_once $functions;
   include_once $db_prog ;
 
-  $title = 'التعليم في أي ظروف';
+  $title = 'المفيد فى الفزياء';
   include_once $header;
   ?>
   <form action="" method="post" class="log-form">
-    <h2 class="text-center t1">التعليم في أي ظروف</h2>
+    <h2 class="text-center t1">المفيد فى الفزياء</h2>
     <div class="back"></div>
     <div class='log-div'>
       <h1 class="text-center">تسجيل الدخول</h1>

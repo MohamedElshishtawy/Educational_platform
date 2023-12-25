@@ -33,18 +33,18 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
       session_destroy();
     } ?>
     <h3 class="welcome">مرحبا</h3>
-    <h2 class="prand">MR. Mohamed</h2>
+    <h2 class="prand">Mr. Ahmed</h2>
     <form method="post" class="for-groub">
-      <button type="submit" name="for_speshialists" class="fields feild-1"> <i class="fa fa-layer-group"></i> خصوصيات طلابي</button>
+      <button type="submit" name="for_speshialists" class="fields feild-1"> <i class="fa fa-layer-group"></i> تقارير طلابي</button>
       <button type="submit" name="for_codes" class="fields feild-2"> <i class="fa fa-layer-group"></i>الأكواد</button>
       <button type="submit" name="for_add_exam" class="fields feild-3"> <i class="fa fa-clipboard-list"></i> إضافة امتحانات</button>
       <button type="submit" name="for_students_marks" class="fields feild-4"> <i class="fa fa-scroll"></i> درجات الطلاب</button>
       <button type="submit" name="for_students_add_video" class="fields feild-5"> <i class="fa fa-video"></i> إضافة فيديو</button>
       <button type="submit" name="for_students_message" class="fields feild-6"> <i class="fa fa-envelope"></i> إرسال رسالة</button>
-      <button type="submit" name="for_add_student" class="fields feild-7"> <i class="fa fa-plus"></i> إضافة طلاب</button>
-      <button type="submit" name="for_add_photo" class="fields feild-8"> <i class="fa fa-camera"></i> إضافة صورة</button>
-      <button type="submit" name="for_pdf" class="fields feild-9"> <i class="fa fa-file-pdf"></i> إضافة PDF</button>
-      <a href="https://www.webex.com" target="_blank"><button type="button" name="for_live" class="fields feild-9"> <i class="fa fa-file-video"></i> موقع البث المباشر</button></a>
+      <button type="submit" name="for_add_student" class="fields feild-9"> <i class="fa fa-plus"></i> إضافة طلاب</button>
+      <!-- <button type="submit" name="for_add_photo" class="fields feild-8"> <i class="fa fa-camera"></i> إضافة صورة</button> -->
+      <!-- <button type="submit" name="for_pdf" class="fields feild-9"> <i class="fa fa-file-pdf"></i> إضافة PDF</button> -->
+      <!-- <a href="https://www.webex.com" target="_blank"><button type="button" name="for_live" class="fields feild-9"> <i class="fa fa-file-video"></i> موقع البث المباشر</button></a> -->
     </form>
     <?php
     if (isset($_POST['for_speshialists'])) {
@@ -71,7 +71,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
     if ($_GET['to'] == 'students_s') {
       //open speshial informaion for students
     ?>
-      <h2 class="page-title">الخصوصيات</h2>
+      <h2 class="page-title">التقارير</h2>
       <form method="post" class="back">
         <button type="submit" name="back_ad" class="btn btn-success"><i class="fa fa-chevron-left"></i></button>
       </form>
@@ -103,7 +103,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
             <table id="table-1" border="1">
               <tbody>
                 <tr>
-                  <th colspan="4">
+                  <th colspan="6">
                     <h3>1ث</h3>
                   </th>
                   <th colspan="1">
@@ -122,8 +122,10 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                   </th>
                 </tr>
                 <tr>
+                  <th>الكود</th>
                   <th>الأسم</th>
-                  <th>رقم التليفون</th>
+                  <th>هاتف الطالب</th>
+                  <th>هاتف ولى الأمر</th>
                   <th>الرمز</th>
                   <th>المجموعة</th>
                   <th>تعديل</th>
@@ -132,14 +134,16 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                 </tr>
                 <?php
                 //select all students ha 1se
-                $students_selected = select_info('ar_name,phone,password,groub,money,id', 'students', 'se', '1se', 'ORDER BY ar_name');
+                $students_selected = select_info('code,ar_name,phone,parent_phone,password,groub,money,id', 'students', 'se', '1se', 'ORDER BY ar_name');
                 if ($students_selected != false) {
                   foreach ($students_selected as $student) {
                     //get all information for 1se
                 ?>
                     <tr>
+                      <td><?php echo $student['code']; ?></td>
                       <td><?php echo $student['ar_name']; ?></td>
                       <td><?php echo $student['phone']; ?></td>
+                      <td><?php echo $student['parent_phone']; ?></td>
                       <td><?php echo $student['password']; ?></td>
                       <td><?php if (!empty($student['groub'])) {
                             echo $student['groub'];
@@ -175,7 +179,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
             <table id="table-2" border="1">
               <tbody>
                 <tr>
-                  <th colspan="4">
+                  <th colspan="6">
                     <h3>2ث</h3>
                   </th>
                   <th colspan="1">
@@ -194,8 +198,10 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                   </th>
                 </tr>
                 <tr>
+                <th>الكود</th>
                   <th>الأسم</th>
-                  <th>رقم التليفون</th>
+                  <th>هاتف الطالب</th>
+                  <th>هاتف ولى الأمر</th>
                   <th>الرمز</th>
                   <th>المجموعة</th>
                   <th>تعديل</th>
@@ -204,15 +210,17 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                 </tr>
                 <?php
                 //select all students ha 2se
-                $students_2_selected = select_info('ar_name,phone,password,groub,money,id', 'students', 'se', '2se', 'ORDER BY ar_name');
+                $students_2_selected = select_info('code,ar_name,phone,parent_phone,password,groub,money,id', 'students', 'se', '2se', 'ORDER BY ar_name');
                 if ($students_2_selected != false) {
                   foreach ($students_2_selected as $student_2) {
                     //get all information for 2se
                 ?>
                     <tr>
-                      <td><?php echo $student_2['ar_name']; ?></td>
-                      <td><?php echo $student_2['phone']; ?></td>
-                      <td><?php echo $student_2['password']; ?></td>
+                      <td><?php echo $student['code']; ?></td>
+                      <td><?php echo $student['ar_name']; ?></td>
+                      <td><?php echo $student['phone']; ?></td>
+                      <td><?php echo $student['parent_phone']; ?></td>
+                      <td><?php echo $student['password']; ?></td>
                       <td><?php if (!empty($student_2['groub'])) {
                             echo $student_2['groub'];
                           } else {
@@ -247,7 +255,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
             <table id="table-3" border="1">
               <tbody>
                 <tr>
-                  <th colspan="4">
+                  <th colspan="6">
                     <h3>3ث</h3>
                   </th>
                   <th colspan="1">
@@ -266,8 +274,10 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                   </th>
                 </tr>
                 <tr>
+                <th>الكود</th>
                   <th>الأسم</th>
-                  <th>رقم التليفون</th>
+                  <th>هاتف الطالب</th>
+                  <th>هاتف ولى الأمر</th>
                   <th>الرمز</th>
                   <th>المجموعة</th>
                   <th>تعديل</th>
@@ -276,16 +286,18 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                 </tr>
                 <?php
                 //select all students ha 3se
-                $students_3_selected = select_info('ar_name,phone,password,groub,money,id', 'students', 'se', '3se', 'ORDER BY ar_name');
+                $students_3_selected = select_info('code,ar_name,phone,parent_phone,password,groub,money,id', 'students', 'se', '3se', 'ORDER BY ar_name');
 
                 if ($students_3_selected != false) {
                   foreach ($students_3_selected as $student_3) {
                     //get all information for 1se
                 ?>
                     <tr>
-                      <td><?php echo $student_3['ar_name']; ?></td>
-                      <td><?php echo $student_3['phone']; ?></td>
-                      <td><?php echo $student_3['password']; ?></td>
+                    <td><?php echo $student['code']; ?></td>
+                      <td><?php echo $student['ar_name']; ?></td>
+                      <td><?php echo $student['phone']; ?></td>
+                      <td><?php echo $student['parent_phone']; ?></td>
+                      <td><?php echo $student['password']; ?></td>
                       <td><?php if (!empty($student_3['groub'])) {
                             echo $student_3['groub'];
                           } else {
@@ -471,6 +483,14 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
             <label class="exam-txt"> <i class="fa fa-stopwatch "></i> عدد الدقائق</label>
             <input type="number" min="0" value="1" name="exam_time" id="exam_time" class="input input-num">
           </div>
+          <hr>
+          <div>
+            <label class="exam-txt"> <i class="fa fa-stopwatch "></i> الفترة المتاحة</label>
+            <label for="start_date">من</label>
+            <input type="datetime-local" name="exam_date_start" id="start_date" class="date-input">
+            <label for="end_date">الى</label>
+            <input type="datetime-local" name="exam_date_end" id="end_date" class="date-input">
+          </div>
         </div>
         <div class="exam-div" id="examDiv">
           <div id="ex" class="ex">
@@ -497,6 +517,8 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
               <th>إسم الإمتحان</th>
               <th>تاريخ التنزيل</th>
               <th>الصف</th>
+              <th>من</th>
+              <th>الى</th>
               <th>حذف</th>
               <th>الفاعلية <button type="submit" name="save_exam_avilability" class="btn btn-success">حفظ <i class="fa fa-save"></i></button></th>
             </tr>
@@ -509,6 +531,8 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                   <td><?php echo str_replace('_', ' ', $exam_select['exam_name']); ?></td>
                   <td><?php echo $exam_select['date']; ?></td>
                   <td><?php echo $exam_select['se']; ?></td>
+                  <td><?php echo $exam_select['start_date']; ?></td>
+                  <td><?php echo $exam_select['end_date']; ?></td>
                   <td><a href="members.php?del_exam=<?php echo str_replace(' ', '_', $exam_select['exam_name']); ?>" class="btn btn-danger">حذف</a></td>
                   <td>
                     <?php
@@ -1221,7 +1245,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
   } else {
     session_unset();
     session_destroy();
-    header('location: index.php');
+    header("location: code-log.php");
     exit();
   }
 

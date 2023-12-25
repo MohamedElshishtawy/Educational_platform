@@ -22,7 +22,7 @@ date_default_timezone_set('Africa/Cairo');
 if (isset($_POST['out'])) {
   session_unset();
   session_destroy();
-  header('location: index.php');
+  header("location: code-log.php");
 }
 /* btn for end session */
 
@@ -62,6 +62,7 @@ if (isset($_POST['log_btn'])) {
       $_SESSION['phone']  = $row_f['phone'];
       $_SESSION['money']  = $row_f['money'];
       $_SESSION['se']    = $row_f['se'];
+      $_SESSION['code']    = $row_f['code'];
       $_SESSION['state'] = $row_f['state'];
     }
 
@@ -84,7 +85,7 @@ if (isset($_POST['log_btn'])) {
       } else {
         session_unset();
         session_destroy();
-        header('location: index.php');
+        header("location: code-log.php");
         exit();
       }
     }
@@ -96,7 +97,7 @@ if (isset($_POST['log_btn'])) {
     } else {
       session_unset();
       session_destroy();
-      header('location: index.php');
+      header("location: code-log.php");
       exit();
     }
   } elseif ($select->rowCount() == 0) {
@@ -129,7 +130,7 @@ if ( isset( $_POST['log_code'] ) ){
           } else {
               session_unset();
               session_destroy();
-              header('location: index.php');
+              header("location: code-log.php");
               exit();
           }
       }
@@ -146,27 +147,29 @@ if ( isset( $_POST['log_code'] ) ){
         //get name and password
         $bad_phone = $_POST['code'];
         $bad_password = $_POST['password'];
-
         //filter name and password
         $bad_phone_f = filter_var($bad_phone, FILTER_SANITIZE_NUMBER_INT);
         $code = filt($bad_phone_f);
-
         $bad_password_f = filter_var($bad_password, FILTER_SANITIZE_STRING);
         $password = filt($bad_password_f);
 
-        //select data base
-        $select = $db->prepare("SELECT * FROM codes WHERE code = ? && password = ? ");
+        //select student frome database
+        $student = $db->prepare("SELECT * FROM students WHERE code = ? && password = ? ");
+        $student->execute(array($code, $password));
 
-        //fill the ? and excute
-        $select->execute(array($code, $password));
-
-        //if student is here
-        if ($select->rowCount() > 0) {
-          $code_data = $select->fetchAll(PDO::FETCH_ASSOC);
-          redirect_wtih_post('set_account.php', $code_data[0]['id']);
-          
+        if ($student->rowCount() > 0) {
+          $student = $student->fetch(PDO::FETCH_ASSOC);
+          set_session_redirect($student['id'],$student['phone'],$student['money'],$student['se'],$student['code'],$student['state']);
+        
         }else{
-          // Error Message
+          $code_db = $db->prepare("SELECT * FROM codes WHERE code = ? && password = ? ");
+          $code_db->execute(array($code, $password));
+          if ( $code_db->rowCount() > 0){
+            header("location: set_account.php?code_id=".$code);
+          }
+          else{
+            echo '<div class="alert alert-danger die" style="position:absolute;top:10px;width:100%">الكود المستخدم او الباسورد خطأ</div>';
+          }
         }
     }
   }
@@ -349,6 +352,8 @@ if (isset($_POST['upload_exam'])) {
   $exam_name_with_space = filter_var($_POST['exam_name'], FILTER_SANITIZE_STRING); // exam name
   $exam_name            = str_replace(' ', '_', $exam_name_with_space);
   $time_of_exam         = filter_var($_POST['exam_time'], FILTER_SANITIZE_STRING); // time you have in exam
+  $start_date           = filter_var($_POST['exam_date_start'] , FILTER_SANITIZE_STRING) ?? NULL; // time you have in exam
+  $end_date             = filter_var($_POST['exam_date_end'], FILTER_SANITIZE_STRING) ?? NULL; // time you have in exam
   $for_se               = filter_var($_POST['se'], FILTER_SANITIZE_STRING); // exam for any secoundry
   // if there is any exam with this name
   $scan = scandir('exams/' . str_replace('se', '', $for_se));
@@ -368,8 +373,8 @@ if (isset($_POST['upload_exam'])) {
   }
   echo $exam_name;
   $place_ex_db->execute(); //***********************************
-  $insert_exam = $db->prepare("INSERT INTO exams (exam_name,se,vilablility,date) VALUES (?,?,?,CURRENT_DATE)");
-  $insert_exam->execute(array($exam_name,$for_se,0));
+  $insert_exam = $db->prepare("INSERT INTO exams (exam_name,se,start_date,end_date,vilablility,date) VALUES (?,?,?,?,?,CURRENT_DATE)");
+  $insert_exam->execute(array($exam_name,$for_se,$start_date,$end_date,0));
   // write inforamtion in the file
   $f_exam_name     = '$exam_name = \'' . $exam_name . '\';';
   $f_time_you_have = '$time_you_have = ' . $time_of_exam . ';';

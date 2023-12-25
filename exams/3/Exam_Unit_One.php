@@ -1,0 +1,1 @@
+<?php $exam_name = 'Exam_Unit_One';$time_you_have = 5;$exam_se = '3se';$exam1 = array('3 × 4 ',array('12','23','33','11'),'a0','','yes','3 × r',array('5r','3r','3t','4t'),'a1','Exam_Unit_One^1935826777^oss.png','',);  include_once '../main.php';
