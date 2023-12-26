@@ -203,7 +203,15 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '2se' && isset($_GET['id']) && 
           echo '<h2 class="page-title">' . 'ركن الأمتحنات' . '</h2>';
 
           // get all exams in db
-          $exams_db = select2('exam_name','exams','vilablility','1',' && se = "2se"');
+          $exams_db = $db->prepare("
+          select * from exams 
+          WHERE 
+          vilablility = 1 
+          AND
+          se = '2se'
+          AND 
+          id NOT IN  (SELECT exam_id from degrees where student_id = 92435 AND exam_id = 2 )
+          ");
           if ( $exams_db != false ) {
             // prepare exams name for compare
             $edited_exams_db = array(); // array for eams name with ".php"

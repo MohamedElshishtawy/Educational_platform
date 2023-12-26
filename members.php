@@ -253,6 +253,30 @@ if ( isset($_SESSION['phone']) && isset($_SESSION['id']) && $_SESSION['id'] == '
         } else {
           echo '<br><br><div class="alert alert-danger">حدث خطأ هذا الإمتحان ليس موجوداَ</div>';
         }
+      } elseif ( isset($_GET['ch_exam_deg_vilab']) ) {
+        
+        $exam_name = filter_var($_GET['ch_exam_deg_vilab'], FILTER_SANITIZE_STRING);
+
+        $select_selc_ex = select_info('see_degree','exams','exam_name',$exam_name);
+
+        if ( $select_selc_ex != false ) {
+          foreach ( $select_selc_ex as $select_ex ) {
+            if ( $select_ex['see_degree'] == 1 ) {
+              update('exams','see_degree = 0','exam_name',$exam_name);
+              echo '<br><br><div class="alert alert-success">تم إلغاء تفعيل درجات الإمتحان</div>';
+              header('Refresh:2; url=mr.php?to=add_exam');
+              exit();
+
+            } else {
+              echo '<br><br><div class="alert alert-danger">هذا الإمتحان غير مفعل بالفعل</div>';
+              header('Refresh:2; url=mr.php?to=add_exam');
+              exit();
+
+            }
+          }
+        } else {
+          echo '<br><br><div class="alert alert-danger">حدث خطأ هذا الإمتحان ليس موجوداَ</div>';
+        }
 
       } elseif ( isset($_GET['delet_img']) ) {
         

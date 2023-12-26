@@ -521,6 +521,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
               <th>الى</th>
               <th>حذف</th>
               <th>الفاعلية <button type="submit" name="save_exam_avilability" class="btn btn-success">حفظ <i class="fa fa-save"></i></button></th>
+              <th>ظهور الدرجة <button type="submit" name="save_exam_degree_avilability" class="btn btn-success">حفظ <i class="fa fa-save"></i></button></th>
             </tr>
             <?php
             $exams_select = select_info('*', 'exams', 'vilablility', '0', ' OR vilablility = 1 ORDER BY se, exam_name');
@@ -541,6 +542,16 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                       echo '<a class="btn btn-info valid-btn" href="members.php?ch_exam_vilab=' . str_replace(' ', '_', $exam_select['exam_name']) . '">إلغاء التفعيل</a>';
                     } else {
                       echo '<input type="checkbox" name="exams[]" value="' . str_replace('_', ' ', $exam_select['exam_name']) . '">';
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($exam_select['see_degree'] == 1) {
+                      echo '<i class="fa fa-check-circle true-check"></i>';
+                      echo '<a class="btn btn-info valid-btn" href="members.php?ch_exam_deg_vilab=' . str_replace(' ', '_', $exam_select['exam_name']) . '">إلغاء التفعيل</a>';
+                    } else {
+                      echo '<input type="checkbox" name="deg_exams[]" value="' . str_replace('_', ' ', $exam_select['exam_name']) . '">';
                     }
                     ?>
                   </td>

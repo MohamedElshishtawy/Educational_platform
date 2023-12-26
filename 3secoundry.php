@@ -11,6 +11,9 @@ include_once $connect;
 include_once $functions;
 
 include_once $db_prog;
+
+echo $_SESSION['message'] ?? '';
+$_SESSION['message'] = '';
 /*
 -------------------
 
@@ -86,14 +89,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
             </figure>
           </a>
 
-          <a class="to to-3" href="https://www.webex.com/" target="_blank">
-            <figure>
-              <img src="<?php echo $imges . 'webex.jpg' ?>" alt="mr mohamed with webex meet" class="se-img">
-              <figcaption>
-                <i class="fa fa-file-video"></i> دخول موقع البث المباشر
-              </figcaption>
-            </figure>
-          </a>
+          
 
           <a class="to to-4" href="?id=<?php echo $_SESSION['id'] ?>&to=pdf">
             <figure>
@@ -210,57 +206,129 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
         } elseif ($_GET['to'] == 'exams') {
 
           echo '<h2 class="page-title">' . 'ركن الأمتحنات' . '</h2>';
+          ?>
+          <table class="table  table-striped">
+            <thead>
+              <tr>
+                <th colspan="4" class="text-center">إختبارات متاحة</th>
+              </tr>
+              <tr>
+                <th class"text-center">اسم الإختبار</th>
+                <th class"text-center">دخول</th>
+                <th class"text-center">متاح من</th>
+                <th class"text-center">الى</th>
+              </tr>
+            </thead>
+            <tbody>
 
-          // get all exams in db
-          $exams_db = select2('exam_name','exams','vilablility','1',' && se = "3se"  && start_date <= now() && end_date > now()');
-          if ( $exams_db != false ) {
-            // prepare exams name for compare
-            $edited_exams_db = array(); // array for eams name with ".php"
-            foreach ( $exams_db as $exam_db_array ) {
-              foreach ( $exam_db_array as $exam_db ) {
-                $edited_exams_db[] = $exam_db . '.php';
-              }
-            }
-            $exams_file = scandir($exams_for_3);
-            if ( count($exams_file) > 2 ) {
-              $prepared_exams = array(); // for ready exams
-              foreach ( $exams_file as $exam_file ) {
-                if ( in_array($exam_file, $edited_exams_db) ) {
-                  $prepared_exams[] = $exam_file;
+          <?php
+            $exam_db = $db->prepare("
+            select * from exams 
+            WHERE 
+            vilablility = 1 
+            AND
+            se = '3se'
+            AND 
+            id NOT IN  (SELECT exam_id from degrees where student_id = ? )
+            ");
+            $exam_db->execute(array($_SESSION['id']));
+
+            if ( $exam_db->rowCount() > 0 ) {
+
+              $exam_db = $exam_db->fetchAll(PDO::FETCH_ASSOC);
+
+              // prepare exams name for compare
+              $edited_exams_db = array(); // array for eams name with ".php"
+              foreach ( $exam_db as $exam_db_array ) {
+                foreach ( $exam_db_array as $exam_db ) {
+                  $edited_exams_db[] = $exam_db . '.php';
                 }
               }
-              if ( count($prepared_exams) > 0 ) {
-                // if condition for style only
-                $push = 1;
-                $col = 5;
-                if ( count($prepared_exams) == 1 ) { $col = 6; $push = 3; }
-                foreach ( $prepared_exams as $prepare_exam ) {
-                  ?>
-                  <a class="ex-btn col-lg-<?php echo $col ?>
-                            col-lg-push-<?php echo $push ?>
-                            col-md-<?php echo $col ?>
-                            col-md-push-<?php echo $push ?> 
-                            col-sm-<?php echo $col ?> 
-                            col-sm-push-1 col-xs-10 col-xs-push-1" href="<?php echo $exams_for_3 . $prepare_exam; ?>">
-                    <span>
-                      <?php
-                      $ex = str_replace('.php', '', $prepare_exam); 
-                      $ex = str_replace('_', ' ', $ex);
-                      echo $ex;
-                      ?>
-                    </span>
-                  </a>
-                  <?php
+              $exams_file = scandir($exams_for_3);
+              if ( count($exams_file) > 2 ) {
+                $prepared_exams = array(); // for ready exams
+                foreach ( $exams_file as $exam_file ) {
+                  if ( in_array($exam_file, $edited_exams_db) ) {
+                    $prepared_exams[] = $exam_file;
+                  }
+                }
+                if ( count($prepared_exams) > 0 ) {
+                  // if condition for style only
+                  $push = 1;
+                  $col = 5;
+                  if ( count($prepared_exams) == 1 ) { $col = 6; $push = 3; }
+                  foreach ( $prepared_exams as $prepare_exam ) {
+                    ?>
+                    <tr>
+                      <td class"text-center"><a class="" href="<?= $exams_for_3 . $prepare_exam; ?>"><?=$exam_db_array['exam_name']?></a></td>
+                      <td class"text-center"><a class="btn btn-success btn-sm" href="<?= $exams_for_3 . $prepare_exam; ?>">دخول</a></td>
+                      <td class"text-center"><?= $exam_db_array['start_date'] ?></td>
+                      <td class"text-center"><?= $exam_db_array['end_date'] ?></td>
+                    </tr>
+                      <span>
+                        <?php
+                        $ex = str_replace('.php', '', $prepare_exam); 
+                        $ex = str_replace('_', ' ', $ex);
+                        echo $ex;
+                        ?>
+                      </span>
+                      </a>
+                    <?php
+                  }
+                } else {
+                  echo '<tr><td colspan="4" class="text-center">' . 'لا يوجد امتحانات لك الان' . '</td></tr>';
                 }
               } else {
-                echo '<div class="alert alert-info text-center">' . 'لا يوجد امتحانات لك الان' . '</div>';
+                echo '<tr><td colspan="4" class="text-center">' . 'لا يوجد امتحانات لك الان' . '</td></tr>';
               }
             } else {
-              echo '<div class="alert alert-info text-center">' . 'لا يوجد امتحانات لك الان' . '</div>';
-            }
-          } else {
-            echo '<div class="alert alert-info text-center">' . 'لا يوجد امتحانات لك الان' . '</div>';
+            echo '<tr><td colspan="4" class="text-center">' . 'لا يوجد امتحانات لك الان' . '</td></tr>';
           }
+          ?>
+
+            </tbody>
+          </table> 
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th colspan="4" class="text-center">امتحانات مجتازة</th>
+              </tr>
+              <tr>
+                <th>الاسم</th>
+                <th>الدرجة</th>
+                <th>مراجعة</th>
+                <th>التاريخ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $passed_exams = $db->prepare("SELECT degrees.*, exams.exam_name, exams.see_degree
+              FROM degrees JOIN exams ON degrees.exam_id = exams.id WHERE student_id = ?");
+              
+              $passed_exams->execute(array($_SESSION['id']));
+              if( $passed_exams->rowCount() > 0  ){
+                $passed_exams = $passed_exams->fetchAll(PDO::FETCH_ASSOC);
+        
+                foreach($passed_exams as $pass_exam){
+                  ?>
+                  <tr>
+                    <td><?=$pass_exam['exam_name']?></td>
+                    <td><?=$pass_exam['see_degree']==1?$pass_exam['degree']:'غير متاح' ?></td>
+                    <td>
+                      <a href="" class="btn btn-success btn-sm <?=$pass_exam['see_degree']==0?'disabled':'' ?>">مراجعة</a></td>
+                    <td><?=$pass_exam['end_at']?></td>
+                  </tr>
+                  <?php
+                }
+              }else{
+                ?>
+                <tr><td colspan=4 class=text-center>لا يوجد امتحانات سابقة</td></tr>
+                <?php
+              }
+              ?>
+            </tbody>
+          </table>
+          <?php
         } elseif ( $to == 'pdf' ) {
           if ( isset($_GET['pdf']) ) {
             $pdf_id = filter_var($_GET['pdf'], FILTER_SANITIZE_NUMBER_INT);

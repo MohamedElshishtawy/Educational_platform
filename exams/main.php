@@ -16,12 +16,21 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
   include_once '../../' . $header;
 
   date_default_timezone_set('Africa/Cairo');
-
-
+  $student_id = $_SESSION['id'];
+  // Get Exam ID To be used
   $exam_data = $db->prepare("SELECT * FROM exams WHERE exam_name = ?");
   $exam_data->execute(array($exam_name));
   $exam_data = $exam_data->fetchAll(PDO::FETCH_ASSOC);
   $exam_id = $exam_data[0]["id"];
+
+  // check if it is the first time only
+  $check = $db->prepare("SELECT * FROM degrees WHERE exam_id = ? && student_id = ?");
+  $check->execute(array($exam_id, $student_id));
+  if($check->rowCount() > 0){
+    $_SESSION['message'] = '<span class="alert alert-danger" style="position:absolute;top:65px;right:5px;z-index=1000">تم حل الإمتحان من قبل</span>';
+    header('location: ../../');
+    exit();
+  }
   
   echo '<br><br><br><h2 class="text-center" id="examHeader">' . str_replace('_',' ',$exam_name) . '</h2><br>';
 
@@ -144,7 +153,8 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
       }
 
     }
-    header("location: /index.php");
+    $_SESSION['message'] = '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">بالتوفيف تم تخزين درجتك مع المعلم</span>';
+    header('location: ../../');
     exit();
   } else {
     // Open the exam

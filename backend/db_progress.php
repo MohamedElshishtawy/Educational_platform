@@ -469,6 +469,22 @@ if ( isset($_POST['save_exam_avilability']) ) {
   }
 }
 
+if ( isset($_POST['save_exam_degree_avilability']) ) {
+  if ( isset($_POST['deg_exams']) ) {
+    foreach ( $_POST['deg_exams'] as $selected_exam ) {
+      $ex_name = str_replace(' ','_',$selected_exam);
+      $select_selc_exam = select2('see_degree','exams','exam_name',$ex_name);
+      if ( $select_selc_exam != false ) {
+        foreach ( $select_selc_exam as $validate_of_ex ) {
+          if ( $validate_of_ex['see_degree'] == 0 ) {
+            update('exams','see_degree = 1','exam_name',$ex_name);
+          }
+        }
+      }
+    }
+  }
+}
+
 /* end save avilability for exam */
 
 /*////////////////////////////////////////////////////////*/
