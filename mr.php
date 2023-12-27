@@ -32,8 +32,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
       session_unset();
       session_destroy();
     } ?>
-    <h3 class="welcome">مرحبا</h3>
-    <h2 class="prand">Mr. Ahmed</h2>
+    <h2 class="prand">اهلا بعودتك مستر / احمد حامد النمر</h2>
     <form method="post" class="for-groub">
       <button type="submit" name="for_speshialists" class="fields feild-1"> <i class="fa fa-layer-group"></i> تقارير طلابي</button>
       <button type="submit" name="for_codes" class="fields feild-2"> <i class="fa fa-layer-group"></i>الأكواد</button>
@@ -136,29 +135,29 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                 //select all students ha 1se
                 $students_selected = select_info('code,ar_name,phone,parent_phone,password,groub,money,id', 'students', 'se', '1se', 'ORDER BY ar_name');
                 if ($students_selected != false) {
-                  foreach ($students_selected as $student) {
+                  foreach ($students_selected as $student_1) {
                     //get all information for 1se
                 ?>
                     <tr>
-                      <td><?php echo $student['code']; ?></td>
-                      <td><?php echo $student['ar_name']; ?></td>
-                      <td><?php echo $student['phone']; ?></td>
-                      <td><?php echo $student['parent_phone']; ?></td>
-                      <td><?php echo $student['password']; ?></td>
-                      <td><?php if (!empty($student['groub'])) {
-                            echo $student['groub'];
+                      <td><?php echo $student_1['code']; ?></td>
+                      <td><?php echo $student_1['ar_name']; ?></td>
+                      <td><?php echo $student_1['phone']; ?></td>
+                      <td><?php echo $student_1['parent_phone']; ?></td>
+                      <td><?php echo $student_1['password']; ?></td>
+                      <td><?php if (!empty($student_1['groub'])) {
+                            echo $student_1['groub'];
                           } else {
                             echo 'غير معروف';
                           } ?></td>
-                      <td><a class="btn btn-info" href="members.php?edit=<?php echo $student['id']; ?>"><i class="fa fa-edit"></i> تعديل</a></td>
-                      <td><a class="btn btn-danger" href="members.php?delete=<?php echo $student['id']; ?>"><i class="fa fa-eraser"></i> حذف</a></td>
+                      <td><a class="btn btn-info" href="members.php?edit=<?php echo $student_1['id']; ?>"><i class="fa fa-edit"></i> تعديل</a></td>
+                      <td><a class="btn btn-danger" href="members.php?delete=<?php echo $student_1['id']; ?>"><i class="fa fa-eraser"></i> حذف</a></td>
                       <td>
                         <?php
-                        if ($student['money'] == '0') {
-                          echo '<input type="checkbox" name="students[]" value="' . $student['id'] . '">';
-                        } elseif ($student['money'] == '1') {
+                        if ($student_1['money'] == '0') {
+                          echo '<input type="checkbox" name="students[]" value="' . $student_1['id'] . '">';
+                        } elseif ($student_1['money'] == '1') {
                           echo '<i class="fa fa-check-circle true-check"></i>';
-                          echo '<a class="btn btn-primary valid-btn" href="members.php?ch_stud_money=' . $student['id'] . '">تعديل الشهر</a>';
+                          echo '<a class="btn btn-primary valid-btn" href="members.php?ch_stud_money=' . $student_1['id'] . '">تعديل الشهر</a>';
                         } else {
                           echo '<span style="color:red">غير معروف</span>';
                         }
@@ -216,11 +215,11 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                     //get all information for 2se
                 ?>
                     <tr>
-                      <td><?php echo $student['code']; ?></td>
-                      <td><?php echo $student['ar_name']; ?></td>
-                      <td><?php echo $student['phone']; ?></td>
-                      <td><?php echo $student['parent_phone']; ?></td>
-                      <td><?php echo $student['password']; ?></td>
+                      <td><?php echo $student_2['code']; ?></td>
+                      <td><?php echo $student_2['ar_name']; ?></td>
+                      <td><?php echo $student_2['phone']; ?></td>
+                      <td><?php echo $student_2['parent_phone']; ?></td>
+                      <td><?php echo $student_2['password']; ?></td>
                       <td><?php if (!empty($student_2['groub'])) {
                             echo $student_2['groub'];
                           } else {
@@ -289,7 +288,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                 $students_3_selected = select_info('code,ar_name,phone,parent_phone,password,groub,money,id', 'students', 'se', '3se', 'ORDER BY ar_name');
 
                 if ($students_3_selected != false) {
-                  foreach ($students_3_selected as $student_3) {
+                  foreach ($students_3_selected as $student) {
                     //get all information for 1se
                 ?>
                     <tr>
@@ -298,20 +297,20 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                       <td><?php echo $student['phone']; ?></td>
                       <td><?php echo $student['parent_phone']; ?></td>
                       <td><?php echo $student['password']; ?></td>
-                      <td><?php if (!empty($student_3['groub'])) {
-                            echo $student_3['groub'];
+                      <td><?php if (!empty($student['groub'])) {
+                            echo $student['groub'];
                           } else {
                             echo 'غير معروف';
                           }  ?></td>
-                      <td><a class="btn btn-info" href="members.php?edit=<?php echo $student_3['id']; ?>"><i class="fa fa-edit"></i> تعديل</a></td>
-                      <td><a class="btn btn-danger" href="members.php?delete=<?php echo $student_3['id']; ?>"><i class="fa fa-eraser"></i> حذف</a></td>
+                      <td><a class="btn btn-info" href="members.php?edit=<?php echo $student['id']; ?>"><i class="fa fa-edit"></i> تعديل</a></td>
+                      <td><a class="btn btn-danger" href="members.php?delete=<?php echo $student['id']; ?>"><i class="fa fa-eraser"></i> حذف</a></td>
                       <td>
                         <?php
-                        if ($student_3['money'] == '0') {
-                          echo '<input type="checkbox" name="students[]" value="' . $student_3['id'] . '">';
-                        } elseif ($student_3['money'] == '1') {
+                        if ($student['money'] == '0') {
+                          echo '<input type="checkbox" name="students[]" value="' . $student['id'] . '">';
+                        } elseif ($student['money'] == '1') {
                           echo '<i class="fa fa-check-circle true-check"></i>';
-                          echo '<a class="btn btn-primary valid-btn" href="members.php?ch_stud_money=' . $student_3['id'] . '">تعديل الشهر</a>';
+                          echo '<a class="btn btn-primary valid-btn" href="members.php?ch_stud_money=' . $student['id'] . '">تعديل الشهر</a>';
                         } else {
                           echo '<span style="color:red">غير معروف</span>';
                         }
@@ -733,77 +732,30 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
           <!-- end 2 secoundry table for marks -->
 
           <!-- start 3 secoundry table for marks -->
+
+          
           <div class="se-div se-3-div">
-            <table border="1" class="table-deg-3">
-              <tbody>
-                <?php
-                $select_columns_3 = $db->prepare("SHOW COLUMNS FROM exams_for_3");
-                $select_columns_3->execute();
-                ?>
-                <tr>
-                  <td colspan="<?php echo $select_columns_3->rowCount() - 1 ?>">
-                    <h3>3ث</h3>
-                  </td>
-                  <td>
-                    <div id="print3" class="btn btn-success"><i class="fa fa-print"></i> Print</div>
-                  </td>
-                </tr>
-                <tr>
-                  <th colspan="<?php echo $select_columns_3->rowCount(); ?>">
-                    <input type="search" class="form-control search-deg-3" id="search-deg-3" placeholder="ابحث عما تريد في طلابك">
-                  </th>
-                </tr>
-                <tr>
-                  <?php
-                  if ($select_columns_3->rowCount() > 0) {
-                    $columns_3 = $select_columns_3->fetchAll();
-                    foreach ($columns_3 as $column_3) {
-                      for ($colum_count_3 = 0; $colum_count_3 < count($column_3); $colum_count_3 += 20) {
-                        if ($column_3[$colum_count_3] == 'student_id') {
-                          echo '<th>' . 'اسم الطالب' . '</th> ';
-                        } else {
-                          echo '<th>' . str_replace('_', ' ', $column_3[$colum_count_3]) . '</th> ';
-                        }
-                      }
-                    }
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">الإمتحانات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <?php $exams = $db->prepare("SELECT * FROM exams WHERE se = '3se'");
+                $exams->execute();
+                if($exams->rowCount() > 0){
+                  $exams = $exams->fetchAll(PDO::FETCH_ASSOC);
+                  foreach($exams as $exam){
+                    echo "<tr>";
+                    echo "<td class='text-center'>";
+                    echo '<a href="exam_deg.php?exam='.$exam["id"].'">'. $exam["exam_name"] .'</a></td>';
+                    echo "</tr>";
                   }
-                  ?>
-                </tr>
-                <?php
-                // select all information about student [ar_name-marks..]
-                $select_student_marks_information_3 = $db->prepare("SELECT s.ar_name,e.* FROM students s LEFT JOIN exams_for_3 e ON e.student_id = s.id WHERE s.se = '3se' ORDER BY s.ar_name ");
-                $select_student_marks_information_3->execute();
-                // if there is a student here
-                if ($select_student_marks_information_3->rowCount() > 0) {
-                  // if there is exams
-                  if ($select_columns_3->rowCount() > 0) {
-                    // fetch the student information
-                    $marks_informations_3 = $select_student_marks_information_3->fetchAll();
-                    foreach ($marks_informations_3 as $mark_information_3) {
-                      echo '<tr>';
-                      for ($tr_3 = 0; $tr_3 < count($mark_information_3) / 2; $tr_3++) {
-                        if ($tr_3 != 1 && $mark_information_3[$tr_3] == '') {
-                          echo '<td style="color:red">' . '<i class="fa fa-times"></i>' . '</td>';
-                        } elseif ($tr_3 == 0) {
-                          echo '<td>' . $mark_information_3[$tr_3]  . '</td>';
-                        } elseif ($tr_3 == 1) {
-                          // don't do think
-                        } else {
-                          echo '<td>';
-                          $mark_3 = strstr($mark_information_3[$tr_3], '@', true);
-                          $mark_date_3 = str_replace('@', '', strstr($mark_information_3[$tr_3], '@', false));
-                          echo '<div class="mark">' . $mark_3 . '</div>';
-                          echo '<div class="mark-date">' . $mark_date_3 . '</div>';
-                          echo '</td>';
-                        }
-                      }
-                      echo '</tr>';
-                    }
-                  }
-                }
-                ?>
-              </tbody>
-            </table>
+                } ?>
+                </tbody>
+              </table>
+              
           </div>
           <!-- end 3 secoundry table for marks -->
         <?php

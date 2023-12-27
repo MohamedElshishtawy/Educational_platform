@@ -44,7 +44,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
 
     <nav class="nav">
       <span class="student-name"><?php echo $_SESSION['phone'] ?></span>
-      <span class="page-se"><?php echo $_SESSION['se']; ?></span>
+      <span class="page-se"><?php echo $_SESSION['name']; ?></span>
     </nav>
 
     <div class="br"><br></div>
@@ -213,10 +213,10 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                 <th colspan="4" class="text-center">إختبارات متاحة</th>
               </tr>
               <tr>
-                <th class"text-center">اسم الإختبار</th>
-                <th class"text-center">دخول</th>
-                <th class"text-center">متاح من</th>
-                <th class"text-center">الى</th>
+                <th class="text-center">اسم الإختبار</th>
+                <th class="text-center">دخول</th>
+                <th class="text-center">متاح من</th>
+                <th class="text-center">الى</th>
               </tr>
             </thead>
             <tbody>
@@ -236,52 +236,22 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
             if ( $exam_db->rowCount() > 0 ) {
 
               $exam_db = $exam_db->fetchAll(PDO::FETCH_ASSOC);
-
-              // prepare exams name for compare
-              $edited_exams_db = array(); // array for eams name with ".php"
-              foreach ( $exam_db as $exam_db_array ) {
-                foreach ( $exam_db_array as $exam_db ) {
-                  $edited_exams_db[] = $exam_db . '.php';
-                }
+              
+          
+              foreach ( $exam_db as $prepare_exam ) {
+                ?>
+                <tr>
+                  <td class="text-center"><a class="" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>"><?=$prepare_exam['exam_name']?></a></td>
+                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>">دخول</a></td>
+                  <td class="text-center"><?= $prepare_exam['start_date'] ?></td>
+                  <td class="text-center"><?= $prepare_exam['end_date'] ?></td>
+                </tr>
+                <?php
               }
-              $exams_file = scandir($exams_for_3);
-              if ( count($exams_file) > 2 ) {
-                $prepared_exams = array(); // for ready exams
-                foreach ( $exams_file as $exam_file ) {
-                  if ( in_array($exam_file, $edited_exams_db) ) {
-                    $prepared_exams[] = $exam_file;
-                  }
-                }
-                if ( count($prepared_exams) > 0 ) {
-                  // if condition for style only
-                  $push = 1;
-                  $col = 5;
-                  if ( count($prepared_exams) == 1 ) { $col = 6; $push = 3; }
-                  foreach ( $prepared_exams as $prepare_exam ) {
-                    ?>
-                    <tr>
-                      <td class"text-center"><a class="" href="<?= $exams_for_3 . $prepare_exam; ?>"><?=$exam_db_array['exam_name']?></a></td>
-                      <td class"text-center"><a class="btn btn-success btn-sm" href="<?= $exams_for_3 . $prepare_exam; ?>">دخول</a></td>
-                      <td class"text-center"><?= $exam_db_array['start_date'] ?></td>
-                      <td class"text-center"><?= $exam_db_array['end_date'] ?></td>
-                    </tr>
-                      <span>
-                        <?php
-                        $ex = str_replace('.php', '', $prepare_exam); 
-                        $ex = str_replace('_', ' ', $ex);
-                        echo $ex;
-                        ?>
-                      </span>
-                      </a>
-                    <?php
-                  }
-                } else {
-                  echo '<tr><td colspan="4" class="text-center">' . 'لا يوجد امتحانات لك الان' . '</td></tr>';
-                }
-              } else {
-                echo '<tr><td colspan="4" class="text-center">' . 'لا يوجد امتحانات لك الان' . '</td></tr>';
+         
               }
-            } else {
+            
+             else {
             echo '<tr><td colspan="4" class="text-center">' . 'لا يوجد امتحانات لك الان' . '</td></tr>';
           }
           ?>

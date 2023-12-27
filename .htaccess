@@ -1,0 +1,21 @@
+
+#don't open files of my web
+OPTIONS -INDEXES
+
+#prevent extend file outside my website
+OPTIONS -FollowSymLinks
+
+#remove apatche name in error pages
+ServerSignature OFF
+
+#return error file user to index
+#RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule . / [L,R=301]
+
+#erorr page
+#ErrorDocument 404 error/error.php
+#ErrorDocument 403 error.php
+
+#Alternate default index page
+DirectoryIndex code-log.php

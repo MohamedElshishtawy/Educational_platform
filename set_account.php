@@ -68,6 +68,7 @@ else {
     $submit = true;
     $user_name       = filter_var($_POST['user_arabic_name'], FILTER_SANITIZE_STRING);
     $user_phone      = filter_var($_POST['user_phone'], FILTER_SANITIZE_NUMBER_INT);
+    $parent_phone      = filter_var($_POST['parent_phone'], FILTER_SANITIZE_NUMBER_INT);
     $user_groub      = filter_var($_POST['user_groub'], FILTER_SANITIZE_STRING);
     $user_password_1 = filter_var($_POST['user_password_1'], FILTER_SANITIZE_STRING);
     $user_password_2 = filter_var($_POST['user_password_2'], FILTER_SANITIZE_STRING);
@@ -88,6 +89,10 @@ else {
       }
       // regular exepretion for pure phone number
       if(!preg_match("/^[0-9]{11}$/",$user_phone)) {
+        $sign_err_array[] = 'اعد كتابه <b>رقمك</b> بصورة صحيحة';
+      }
+      // regular exepretion for pure phone number
+      if(!preg_match("/^[0-9]{11}$/",$parent_phone)) {
         $sign_err_array[] = 'اعد كتابه <b>رقمك</b> بصورة صحيحة';
       }
       // regular exepretion for pure groub name
@@ -139,8 +144,8 @@ else {
         $delete = $db->prepare("DELETE FROM codes WHERE id = ?");
         $delete->execute(array($code[0]['id']));
         // Insert the user to db
-        $insert_info = $db->prepare("INSERT INTO students(id,ar_name,phone,password,money,se,code,state,groub) VALUES(?,?,?,?,?,?,?,?,?)");
-        $insert_process = $insert_info->execute(array($user_id,$user_name,$user_phone,$user_password_1,$code[0]['activate'],$user_se,$code[0]['code'],'10',$user_groub));
+        $insert_info = $db->prepare("INSERT INTO students(id,ar_name,phone,parent_phone,password,money,se,code,state,groub) VALUES(?,?,?,?,?,?,?,?,?,?)");
+        $insert_process = $insert_info->execute(array($user_id,$user_name,$user_phone,$parent_phone,$user_password_1,$code[0]['activate'],$user_se,$code[0]['code'],'10',$user_groub));
         echo $user_id . '<br>' . $user_se;
         if( $insert_process ) {
           // set sessions
@@ -201,15 +206,26 @@ else {
                 required value="<?php if(isset($user_phone)){echo $user_phone;}?>">
         <i class="fa fa-phone fa-fw icon"></i>
       </div>
+      <div class="field require">
+        <div class="txt">تلفون ولى الأمر</div>
+        <input type="text"
+                id="phoneInput" 
+                class="input input-phone" 
+                name="parent_phone" 
+                placeholder="رقم هاتفك" 
+                required value="<?php if(isset($user_phone)){echo $user_phone;}?>">
+        <i class="fa fa-phone fa-fw icon"></i>
+      </div>
       <div class="field">
         <div class="txt">المجموعة الخاصة بك</div>
-        <input type="text"
-                id="groubInput" 
-                class="input input-groub" 
-                name="user_groub" 
-                placeholder="اسم مجموعتك" 
-                value="<?php if(isset($user_groub)){echo $user_groub;}?>">
         <i class="fa fa-users fa-fw icon"></i>
+        <select name="user_groub" id="groubInput" class="input"value="<?php if(isset($user_groub)){echo $user_groub;}?>">
+          <option value="ابوحماد">ابوحماد</option>
+          <option value="الحلمية">الحلمية</option>
+          <option value="العاشر">العاشر</option>
+        </select>
+        
+        
       </div>
       <div class="field require">
         <div class="txt">الرمز السري</div>
