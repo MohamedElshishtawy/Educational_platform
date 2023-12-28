@@ -237,8 +237,9 @@ function redirect_wtih_post($url, ...$data){
 
 
 
-function set_session_redirect($id,$phone,$money,$se,$code,$state){
+function set_session_redirect($id,$name,$phone,$money,$se,$code,$state){
   $_SESSION['id']    = $id;
+  $_SESSION['name']  = $name;
   $_SESSION['phone']  = $phone;
   $_SESSION['money']  = $money;
   $_SESSION['se']    = $se;
@@ -325,12 +326,11 @@ function getAnswers($studentID, $examID, $se) {
   return $answers;
 }
 
-function showExamAnsers($exam1, $exam_se,$db){
+function showExamAnsers($exam1, $answers,$student_id ,$exam_se,$db){
   // delete answers info
     echo '<script>localStorage.clear();</script>';
 
     // delet his time history
-    $student_id = $_SESSION['id'];
     $score = 0;
     $ans_count = 0;
 
@@ -348,13 +348,9 @@ function showExamAnsers($exam1, $exam_se,$db){
       }
       $ans_round = 'q' . $ans_count;
       
-      if ( isset($_POST[$ans_round]) ) {
-        $answer_you_choese = filter_var($_POST[$ans_round], FILTER_SANITIZE_STRING);
-      } else {
-        $answer_you_choese = '';
-      }
-      // store the answer
-      $student_answers[$ans_count] = $answer_you_choese;
+
+      $answer_you_choese = $answers[$ans_count] ?? '';
+      
 
       //if answer of the qustio is correct
       if ($answer_you_choese == $exam1[$ques + 2]) {
@@ -396,5 +392,18 @@ function showExamAnsers($exam1, $exam_se,$db){
     // place a btn [to go index] && the score he had
     echo '<form method="post" action="../../"><button type="submit" class="btn btn-info text-center"><i class="fa fa-thumbs-up"></i> حسنا</button></form>';
     echo '<hr>';
+}
+
+
+function set_student_sessions($user_id,$user_name,$user_phone,$parent_phone,$activate,$user_se,$code,$group,$state = '10'){
+  $_SESSION['id']    = $user_id;
+  $_SESSION['name']    = $user_name;
+  $_SESSION['code']    = $code;
+  $_SESSION['phone']  = $user_phone;
+  $_SESSION['parent_phone']  = $parent_phone;
+  $_SESSION['money']  = $activate;
+  $_SESSION['se']    = $user_se;
+  $_SESSION['state'] = $state;
+  $_SESSION['groub'] = $group;
 }
 ?>

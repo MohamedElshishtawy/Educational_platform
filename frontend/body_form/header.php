@@ -11,7 +11,7 @@
   <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
-  <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'framework2.css';?>">
   <link rel="stylesheet" href="<?php echo $css . 'log-page.css' ?>">
   <?php
   }
@@ -20,7 +20,7 @@
     <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
     <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
     <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
-    <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
+    <link rel="stylesheet" href="<?php echo $css.'framework2.css';?>">
     <link rel="stylesheet" href="<?php echo $css . 'sign-in-page.css' ?>">
     <?php
   }
@@ -29,7 +29,7 @@
   <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
-  <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'framework2.css';?>">
   <link rel="stylesheet" href="<?php echo $css.'mr1.css';?>">
   <link rel="stylesheet" href="<?php echo $css.'add_exam.css';?>">
   <?php
@@ -39,7 +39,7 @@
   <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
-  <link rel="stylesheet" href="<?php echo $css.'framework.css';?>">
+  <link rel="stylesheet" href="<?php echo $css.'framework2.css';?>">
   <link rel="stylesheet" href="<?php echo $css.'student.css';?>">
   <?php
   }
@@ -48,9 +48,18 @@
   <link rel="icon" href="<?php echo '../../'.$imges.'lamb.png';?>">
   <link rel="stylesheet" href="<?php echo '../../'.$bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo '../../'.$fontawesome_css;?>">
-  <link rel="stylesheet" href="<?php echo '../../'.$css.'framework.css';?>">
+  <link rel="stylesheet" href="<?php echo '../../'.$css.'framework2.css';?>">
   <link rel="stylesheet" href="<?php echo '../../'.$css.'exam.css';?>">
   <?php
+  }
+  elseif($title == 'إجابات'){
+    ?>
+    <link rel="icon" href="<?php echo '../'.$imges.'lamb.png';?>">
+    <link rel="stylesheet" href="<?php echo '../'.$bootstrab_css;?>">
+    <link rel="stylesheet" href="<?php echo '../'.$fontawesome_css;?>">
+    <link rel="stylesheet" href="<?php echo '../'.$css.'framework2.css';?>">
+    <link rel="stylesheet" href="<?php echo '../'.$css.'exam.css';?>">
+    <?php
   }
   ?>
 </head>

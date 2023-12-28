@@ -97,48 +97,67 @@ $(document).ready(function () {
     $('.search-3').slideToggle();
   });
   // search progress for students informations
-  $('#search-1').on('keyup',function(){
+  $('#search-1').on('keyup', function () {
     var value = $(this).val().toLowerCase();
-    $('#table-1 tr').filter(function(){
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  
+    // Filter only the first td in each row
+    $('#table-1 tr').each(function () {
+      var firstTd = $(this).find('td:first-child');
+      var rowText = firstTd.text().toLowerCase();
+      firstTd.closest('tr').toggle(rowText.indexOf(value) > -1);
     });
-    $('#table-1 tr:first,#table-1 tr:nth-child(2),#table-1 tr:nth-child(3)').show();
+  
+    // Show the first two rows
+    $('#table-1 tr:first, #table-1 tr:nth-child(2)').show();
   });
-  $('#search-2').on('keyup',function(){
+  $('#search-2').on('keyup', function () {
     var value = $(this).val().toLowerCase();
-    $('#table-2 tr').filter(function(){
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  
+    // Filter only the first td in each row
+    $('#table-2 tr').each(function () {
+      var firstTd = $(this).find('td:first-child');
+      var rowText = firstTd.text().toLowerCase();
+      firstTd.closest('tr').toggle(rowText.indexOf(value) > -1);
     });
-    $('#table-2 tr:first,#table-2 tr:nth-child(2),#table-2 tr:nth-child(3)').show();
+  
+    // Show the first two rows
+    $('#table-1 tr:first, #table-1 tr:nth-child(2)').show();
   });
-  $('#search-3').on('keyup',function(){
+  $('#search-3').on('keyup', function () {
     var value = $(this).val().toLowerCase();
-    $('#table-3 tr').filter(function(){
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  
+    // Filter only the first td in each row
+    $('#table-3 tr').each(function () {
+      var firstTd = $(this).find('td:first-child');
+      var rowText = firstTd.text().toLowerCase();
+      firstTd.closest('tr').toggle(rowText.indexOf(value) > -1);
     });
-    $('#table-3 tr:first,#table-3 tr:nth-child(2),#table-3 tr:nth-child(3)').show();
+  
+    // Show the first two rows
+    $('#table-1 tr:first, #table-1 tr:nth-child(2)').show();
   });
+  // IN HASH NOW BECOUSE WE DELETED THE OLD DESIGN
   // search progress for deg page
   $('#search-deg-1').on('keyup',function(){
     var value = $(this).val().toLowerCase();
     $('.table-deg-1 tr').filter(function(){
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
-    $('.table-deg-1 tr:first,.table-deg-1 tr:nth-child(2),.table-deg-1 tr:nth-child(3)').show();
+    $('.table-deg-1 tr:first,.table-deg-1 tr:nth-child(2)').show();
   });
   $('#search-deg-2').on('keyup',function(){
     var value = $(this).val().toLowerCase();
     $('.table-deg-2 tr').filter(function(){
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
-    $('.table-deg-2 tr:first,.table-deg-2 tr:nth-child(2),.table-deg-2 tr:nth-child(3)').show();
+    $('.table-deg-2 tr:first,.table-deg-2 tr:nth-child(2)').show();
   });
   $('.search-deg-3').on('keyup',function(){
     var value = $(this).val().toLowerCase();
     $('.table-deg-3 tr').filter(function(){
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
-    $('.table-deg-3 tr:first,.table-deg-3 tr:nth-child(2),.table-deg-3 tr:nth-child(3)').show();
+    $('.table-deg-3 tr:first,.table-deg-3 tr:nth-child(2)').show();
   });
 
   // print btn

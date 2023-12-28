@@ -4,7 +4,7 @@
   <script src="<?php echo $jquery;?>"></script>
   <script src="<?php echo $bootstrap_js;?>"></script>
   <script src="<?php echo $fontawesome_js;?>"></script>
-  <script src="<?php echo $js.'all.js';?>"></script>
+  <script src="<?php echo $js.'all_js.js';?>"></script>
   <?php
   }
   elseif($title=="Sign In | المفيد فى الفزياء"){
@@ -20,7 +20,7 @@
   <script src="<?php echo $jquery;?>"></script>
   <script src="<?php echo $bootstrap_js;?>"></script>
   <script src="<?php echo $fontawesome_js;?>"></script>
-  <script src="<?php echo $js.'all.js';?>"></script> 
+  <script src="<?php echo $js.'all_js.js';?>"></script> 
   <script src="<?php echo $js.'add_ex.js';?>"></script>
   <?php
   }
@@ -29,7 +29,7 @@
     <script src="<?php echo '../../'.$jquery;?>"></script>
     <script src="<?php echo '../../'.$bootstrap_js;?>"></script>
     <script src="<?php echo '../../'.$fontawesome_js;?>"></script>
-    <script src="<?php echo '../../'.$js.'all.js';?>"></script>
+    <script src="<?php echo '../../'.$js.'all_js.js';?>"></script>
     <?php
     }
   ?>

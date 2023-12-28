@@ -153,7 +153,7 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
       }
 
     }
-    $_SESSION['message'] = '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">بالتوفيف تم تخزين درجتك مع المعلم</span>';
+    $_SESSION['message'] = '<span class="alert alert-success" style="position:absolute;top:10px;right:5px;z-index:1000">بالتوفيف تم تخزين درجتك مع المعلم</span>';
     header('location: ../../');
     exit();
   } else {

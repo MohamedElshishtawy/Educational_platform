@@ -62,7 +62,6 @@ else {
   
   $code = select_info("*", "codes", "code", $_GET['code_id']) ;
 
-  var_dump($code);
   $submit = false; // I use it to echo proccess cases when submit
   if ( isset($_POST['sign_in_code']) ) {
     $submit = true;
@@ -150,6 +149,7 @@ else {
         if( $insert_process ) {
           // set sessions
           $_SESSION['id']    = $user_id;
+          $_SESSION['name']    = $user_name;
           $_SESSION['phone']  = $user_phone;
           $_SESSION['money']  = $code[0]['activate'];
           $_SESSION['se']    = $user_se;
@@ -165,7 +165,6 @@ else {
       }
     }
   }
-  var_dump($code);
   ?>
   <form action="" method="post" class="sign-form">
     <h2 class="text-center t1">Code: <?= $code[0]['code'] ?></h2>

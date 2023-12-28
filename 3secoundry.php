@@ -205,12 +205,11 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
           }
         } elseif ($_GET['to'] == 'exams') {
 
-          echo '<h2 class="page-title">' . 'ركن الأمتحنات' . '</h2>';
           ?>
           <table class="table  table-striped">
             <thead>
               <tr>
-                <th colspan="4" class="text-center">إختبارات متاحة</th>
+                <th colspan="4" class="text-center h4 cover">إختبارات متاحة</th>
               </tr>
               <tr>
                 <th class="text-center">اسم الإختبار</th>
@@ -261,7 +260,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
           <table class="table table-striped">
             <thead>
               <tr>
-                <th colspan="4" class="text-center">امتحانات مجتازة</th>
+                <th colspan="4" class="text-center cover h4">امتحانات مجتازة</th>
               </tr>
               <tr>
                 <th>الاسم</th>
@@ -285,7 +284,11 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                     <td><?=$pass_exam['exam_name']?></td>
                     <td><?=$pass_exam['see_degree']==1?$pass_exam['degree']:'غير متاح' ?></td>
                     <td>
-                      <a href="" class="btn btn-success btn-sm <?=$pass_exam['see_degree']==0?'disabled':'' ?>">مراجعة</a></td>
+                      <?php if($pass_exam['see_degree']==0):?>
+                        <a href="#" class="btn btn-success btn-sm disabled">مراجعة</a></td>
+                      <?php else:?>
+                        <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['id']?>&exam_n=<?=$pass_exam['exam_name']?>" class="btn btn-success btn-sm">مراجعة</a></td>
+                      <?php endif;?>
                     <td><?=$pass_exam['end_at']?></td>
                   </tr>
                   <?php

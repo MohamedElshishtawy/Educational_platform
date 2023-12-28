@@ -57,13 +57,17 @@ if (isset($_POST['log_btn'])) {
 
     //put data in sessions
     foreach ($rows_f as $row_f) {
-
-      $_SESSION['id']    = $row_f['id'];
-      $_SESSION['phone']  = $row_f['phone'];
-      $_SESSION['money']  = $row_f['money'];
-      $_SESSION['se']    = $row_f['se'];
-      $_SESSION['code']    = $row_f['code'];
-      $_SESSION['state'] = $row_f['state'];
+      set_student_sessions(
+        $row_f['id'],
+        $row_f['ar_name'],
+        $row_f['phone'],
+        $row_f['parent_phone'],
+        $row_f['money'],
+        $row_f['se'],
+        $row_f['code'],
+        $row_f['group'],
+        $row_f['state']
+      );
     }
 
     //if is student
@@ -159,7 +163,7 @@ if ( isset( $_POST['log_code'] ) ){
 
         if ($student->rowCount() > 0) {
           $student = $student->fetch(PDO::FETCH_ASSOC);
-          set_session_redirect($student['id'],$student['phone'],$student['money'],$student['se'],$student['code'],$student['state']);
+          set_session_redirect($student['id'],$student['ar_name'],$student['phone'],$student['money'],$student['se'],$student['code'],$student['state']);
         
         }else{
           $code_db = $db->prepare("SELECT * FROM codes WHERE code = ? && password = ? ");

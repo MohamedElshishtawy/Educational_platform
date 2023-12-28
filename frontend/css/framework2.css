@@ -85,3 +85,23 @@ z-index: 1111;
   top: 26px;
 }
 /* end reqire */
+
+
+/* Cover */
+.cover::before,.cover::after{
+  content: '';
+  background: #5cb85c;
+  width: 45px;
+  height: 2px;
+  position: absolute;
+  margin-top: 12px;
+  box-shadow: 1px 1px 3px;
+  border-radius: 20px 
+}
+
+.cover::before{
+  margin-right: -52px;
+}
+.cover::after{
+  margin-right: 8px;
+}

@@ -27,7 +27,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
   if (!isset($_GET['to'])) {
     //open main page
 ?>
-    <form method="POST"><button type="submit" name="reset" style="position:absolute;top:-10px;right:1px;background:transparent;margin:0;border-width:0">start</button></form>
+    <!-- <form method="POST"><button class="btn btn-danger" type="submit" name="reset" style="position:absolute;left: 25px;top: 29px;">Logout</button></form> -->
     <?php if (isset($_POST['reset'])) {
       session_unset();
       session_destroy();
@@ -40,7 +40,10 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
       <button type="submit" name="for_students_marks" class="fields feild-4"> <i class="fa fa-scroll"></i> درجات الطلاب</button>
       <button type="submit" name="for_students_add_video" class="fields feild-5"> <i class="fa fa-video"></i> إضافة فيديو</button>
       <button type="submit" name="for_students_message" class="fields feild-6"> <i class="fa fa-envelope"></i> إرسال رسالة</button>
-      <button type="submit" name="for_add_student" class="fields feild-9"> <i class="fa fa-plus"></i> إضافة طلاب</button>
+      <button type="submit" name="for_add_student" class="fields feild-7"> <i class="fa fa-plus"></i> إضافة طلاب</button>
+      <form method="POST">
+        <button class="fields feild-8 btn btn-danger" type="submit" name="reset" > <i class="fa fa-door-open"></i>  Logout</button>
+      </form>
       <!-- <button type="submit" name="for_add_photo" class="fields feild-8"> <i class="fa fa-camera"></i> إضافة صورة</button> -->
       <!-- <button type="submit" name="for_pdf" class="fields feild-9"> <i class="fa fa-file-pdf"></i> إضافة PDF</button> -->
       <!-- <a href="https://www.webex.com" target="_blank"><button type="button" name="for_live" class="fields feild-9"> <i class="fa fa-file-video"></i> موقع البث المباشر</button></a> -->
