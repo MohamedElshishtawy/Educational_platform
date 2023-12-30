@@ -59,7 +59,8 @@ else {
 
   $title = 'Sign In | المفيد فى الفزياء';
   include_once $header;
-  
+
+  include_once $loader;
   $code = select_info("*", "codes", "code", $_GET['code_id']) ;
 
   $submit = false; // I use it to echo proccess cases when submit
@@ -252,7 +253,7 @@ else {
     </div>
   </form>
 	<footer class="sign-footer">
-		<span class="my">BY => &hearts; <a href="#">Mohamed Elshishtawy</a></span>
+		<span class="my">BY => &hearts; <a href="https://5dmaty.com/">5dmaty</a></span>
 		<span class="copy">all right are reseved &copy; 2021</span>
     </footer>
   

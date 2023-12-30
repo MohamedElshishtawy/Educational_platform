@@ -240,8 +240,8 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
               foreach ( $exam_db as $prepare_exam ) {
                 ?>
                 <tr>
-                  <td class="text-center"><a class="" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>"><?=$prepare_exam['exam_name']?></a></td>
-                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>">دخول</a></td>
+                  <td class="text-center"><a class="" href="<?= 'exams/exam.php?exam='. $prepare_exam['id'] ?>"><?=$prepare_exam['exam_name']?></a></td>
+                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= 'exams/exam.php?exam='. $prepare_exam['id'] ?>">دخول</a></td>
                   <td class="text-center"><?= $prepare_exam['start_date'] ?></td>
                   <td class="text-center"><?= $prepare_exam['end_date'] ?></td>
                 </tr>

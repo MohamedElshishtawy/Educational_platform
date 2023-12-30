@@ -42,6 +42,7 @@ $imges    = 'frontend/imges/';
 $header = 'frontend/body_form/header.php';
 $footer = 'frontend/body_form/footer.php';
 $body   = 'frontend/body_form/';
+$loader = 'frontend/body_form/loader.php';
 // lib
 $bootstrab_css    = 'frontend/lib/bootstrap3/css/bootstrap.min.css';
 $bootstrap_js    = 'frontend/lib/bootstrap3/js/bootstrap.min.js';
