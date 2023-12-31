@@ -252,10 +252,10 @@ else {
       <button type="submit" name="sign_in_code" id="log" class="btn btn-info btn-md">تسجيل الحساب <i class="fa fa-sign-in-alt fa-fw"></i></button>
     </div>
   </form>
-	<footer class="sign-footer">
+	<!-- <footer class="sign-footer">
 		<span class="my">BY => &hearts; <a href="https://5dmaty.com/">5dmaty</a></span>
 		<span class="copy">all right are reseved &copy; 2021</span>
-    </footer>
+    </footer> -->
   
   <?php
   include_once $footer;
