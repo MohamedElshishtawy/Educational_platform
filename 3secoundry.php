@@ -230,7 +230,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                   AND id NOT IN (SELECT exam_id FROM degrees WHERE student_id = ?)
                   AND (
                       (exams.start_date <= CURRENT_TIMESTAMP AND exams.end_date >= CURRENT_TIMESTAMP)
-                      OR (exams.start_date IS NULL OR exams.end_date IS NULL)
+                      OR (exams.start_date  = '0000-00-00 00:00:00' OR exams.end_date = '0000-00-00 00:00:00')
                   )
             ");
             $exam_db->execute(array($_SESSION['id']));
@@ -243,8 +243,8 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
               foreach ( $exam_db_data as $prepare_exam ) {
                 ?>
                 <tr>
-                  <td class="text-center"><a class="" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>"><?=$prepare_exam['exam_name']?></a></td>
-                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>">دخول</a></td>
+                  <td class="text-center"><a class="" href="<?= "exams/exam.php?exam=". $prepare_exam['id']?>"><?=$prepare_exam['exam_name']?></a></td>
+                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= "exams/exam.php?exam=" . $prepare_exam['id']?>">دخول</a></td>
                   <td class="text-center"><?= $prepare_exam['start_date'] ?></td>
                   <td class="text-center"><?= $prepare_exam['end_date'] ?></td>
                 </tr>
@@ -292,8 +292,9 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                       <?php if($pass_exam['see_degree']==0):?>
                         <a href="#" class="btn btn-success btn-sm disabled">مراجعة</a></td>
                       <?php else:?>
-                        <div class="text-success">المراجعة ستتاح قريبا</div>
-                        <!-- <?php /* <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['id']?>&exam_n=<?=$pass_exam['exam_name']?>" class="btn btn-success btn-sm">مراجعة</a> */ ?> -->
+                        <!-- <div class="text-success">المراجعة ستتاح قريبا</div> -->
+                        <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['id']?>" class="btn btn-success btn-sm">مراجعة</a>
+
                         <?php endif;?>
                     <td><?=$pass_exam['end_at']?></td>
                   </tr>
