@@ -9,19 +9,21 @@
   if($title=='المفيد فى الفزياء'){
   ?>
   <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
+  <link rel="stylesheet" href="<?php echo $css . 'loader.css';?>">
   <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
   <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
   <link rel="stylesheet" href="<?php echo $css.'framework2.css';?>">
-  <link rel="stylesheet" href="<?php echo $css . 'log-page.css' ?>">
+  <link rel="stylesheet" href="<?php echo $css . 'log-page.css?12' ?>">
   <?php
   }
   elseif($title=="Sign In | المفيد فى الفزياء"){
     ?>
     <link rel="icon" href="<?php echo $imges.'lamb.png';?>">
     <link rel="stylesheet" href="<?php echo $bootstrab_css;?>">
+    <link rel="stylesheet" href="<?php echo $css . 'loader.css?12';?>">
     <link rel="stylesheet" href="<?php echo $fontawesome_css;?>">
-    <link rel="stylesheet" href="<?php echo $css.'framework2.css';?>">
-    <link rel="stylesheet" href="<?php echo $css . 'sign-in-page.css' ?>">
+    <link rel="stylesheet" href="<?php echo $css.'framework2.css?12';?>">
+    <link rel="stylesheet" href="<?php echo $css . 'sign-in-page.css?12' ?>">
     <?php
   }
   elseif($title=='الإدارة'){
@@ -45,11 +47,11 @@
   }
   elseif($title=='امتحان'){
   ?>
-  <link rel="icon" href="<?php echo '../../'.$imges.'lamb.png';?>">
-  <link rel="stylesheet" href="<?php echo '../../'.$bootstrab_css;?>">
-  <link rel="stylesheet" href="<?php echo '../../'.$fontawesome_css;?>">
-  <link rel="stylesheet" href="<?php echo '../../'.$css.'framework2.css';?>">
-  <link rel="stylesheet" href="<?php echo '../../'.$css.'exam.css';?>">
+  <link rel="icon" href="<?php echo '../'.$imges.'lamb.png';?>">
+  <link rel="stylesheet" href="<?php echo '../'.$bootstrab_css;?>">
+  <link rel="stylesheet" href="<?php echo '../'.$fontawesome_css;?>">
+  <link rel="stylesheet" href="<?php echo '../'.$css.'framework2.css';?>">
+  <link rel="stylesheet" href="<?php echo '../'.$css.'exam.css';?>">
   <?php
   }
   elseif($title == 'إجابات'){

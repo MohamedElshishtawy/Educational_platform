@@ -283,16 +283,16 @@ function set_session_redirect($id,$name,$phone,$money,$se,$code,$state){
 }
 
 function saveAnswersFile ($studentID, $examID,$se, $answers) {
-  // Define the base directory
+  
   $baseDir = '../answers/'.$se[0];
 
-  // Create the exam directory if it doesn't exist
+  
   $examDir = $baseDir . '/' . $examID;
   if (!file_exists($examDir)) {
       mkdir($examDir, 0777, true); // 0777 provides full permissions, adjust as needed
   }
 
-  // Create the student's file
+  
   $studentFile = $examDir . '/' . $studentID . '.php';
 
   // Serialize and save the answers to the file
@@ -405,5 +405,34 @@ function set_student_sessions($user_id,$user_name,$user_phone,$parent_phone,$act
   $_SESSION['se']    = $user_se;
   $_SESSION['state'] = $state;
   $_SESSION['groub'] = $group;
+}
+
+
+function message($messsage, $type, $redirect = 'index.php'){
+  $_SESSION['message'] = '<span class="alert alert-'.$type.'" style="position:absolute;top:65px;right:5px;z-index=1000">'.$messsage.'</span>';
+  header('location: '.$redirect);
+  exit();
+}
+
+// Function to handle image upload errors
+function handleImageUploadError($errorCode, $imageName) {
+  $errorMessage = '';
+
+  switch ($errorCode) {
+      case 1:
+      case 2:
+          $errorMessage = 'الصورة ' . $imageName . ' أكبر من اللازم';
+          break;
+      case 3:
+          $errorMessage = 'الصورة ' . $imageName . ' لم يتم تحميلها كلياً';
+          break;
+      case 4:
+      case 7:
+      case 8:
+          $errorMessage = 'الصورة ' . $imageName . ' لم يتم تحميلها';
+          break;
+  }
+
+  echo '<span class="alert alert-danger" style="position:relative;top:10px;right:5px">' . $errorMessage . '</span>';
 }
 ?>

@@ -48,6 +48,8 @@ else {
 
     $title = 'المفيد فى الفزياء';
     include_once $header;
+    include_once $loader;
+
     ?>
     <form action="" method="post" class="log-form" onsubmit="makePostRequest(); return false;">
         <div class="back"></div>

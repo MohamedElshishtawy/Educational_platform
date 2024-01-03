@@ -52,7 +52,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
     <div class="br"><br></div>
 
     <div class="text-center addr">
-      <h2>المفيد فى الفزياء</h2>
+    <h2>المفيد فى الفيزياء</h2>
     </div>
 
     <img src="<?php echo $imges . 'test.svg' ?>" class="paper-img">
@@ -61,7 +61,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
     //if he isn't finish his money
     $monies = select2('money', 'students', 'id', $_SESSION['id'], '', '');
     if ($monies['0']['money'] == 0) {
-      echo '<div class="alert alert-danger">' . 'انت لم تدفع الأشتراك بعد ' .'</div>';
+      echo '<div class="alert alert-danger">' . 'انت لم تدفع الأشتراك بعد ' . '</div>';
       include_once $footer;
       exit();
     } elseif ($monies['0']['money'] == 1) {
@@ -71,7 +71,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
 
         <div class="group">
 
-        <a class="to to-1" href="?id=<?php echo $_SESSION['id'] ?>&to=exams">
+          <a class="to to-1" href="?id=<?php echo $_SESSION['id'] ?>&to=exams">
             <figure>
               <img src="<?php echo $imges . 'inesh.png' ?>" alt="you can't see this photo" class="se-img">
               <figcaption>
@@ -89,7 +89,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
             </figure>
           </a>
 
-          
+
 
           <a class="to to-4" href="?id=<?php echo $_SESSION['id'] ?>&to=pdf">
             <figure>
@@ -111,7 +111,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
 
         </div>
 
-        <?php include_once $body.'black_small_footer.php';?>
+        <?php include_once $body . 'black_small_footer.php'; ?>
 
         <?php
       } else {
@@ -121,7 +121,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
           $no_vid_err = '<div class="alert alert-info">لا توجد فيديوهات حتي الان</div>';
           $videos_selected = select2('*', 'videos', 'se', '3se', ' && activity = 1', $no_vid_err);
 
-          if ( $videos_selected != $no_vid_err) {
+          if ($videos_selected != $no_vid_err) {
             foreach ($videos_selected as $video_selected) {
               $fileTypePrepare_for_st = array_reverse(explode('.', $video_selected['video']));
               $fileType_for_st = $fileTypePrepare_for_st[0];
@@ -156,14 +156,14 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
           }
         } elseif ($_GET['to'] == 'images') {
           // the Gallary for images
-          if(isset($_GET['img_dir'])){
+          if (isset($_GET['img_dir'])) {
             $images_name = filter_var($_GET['img_dir'], FILTER_SANITIZE_STRING);
             $images_name = filt($images_name);
-            $all_images = select_info('*', 'images', 'se', '3se', ' && vialblity = 1 && name = "'.$images_name.'"');
-            if($all_images != false ){
-              echo '<h2 class="page-title">'. $images_name .'</h2>';
+            $all_images = select_info('*', 'images', 'se', '3se', ' && vialblity = 1 && name = "' . $images_name . '"');
+            if ($all_images != false) {
+              echo '<h2 class="page-title">' . $images_name . '</h2>';
               foreach ($all_images as $image_selected) {
-                ?>
+              ?>
                 <div class="image-div">
                   <img src="<?php echo $image_selected['image'] ?>">
                   <hr>
@@ -171,15 +171,15 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                   <hr>
                   <p class="image discription"><?php echo $image_selected['description']; ?></p>
                 </div>
-                <?php
+              <?php
               }
-            } else{
+            } else {
               echo '<div class="alert alert-danger">لا يوجد صورة بذلك الأسم للأسف</div>';
               header('Refresh:2 ; url=?');
               exit();
             }
             // Gallary for images names
-          } else{
+          } else {
             echo '<h1 class="page-title">' . 'صور الحصص' . '</h1>';
 
             $images_selected = select_info('name', 'images', 'se', '3se', ' && vialblity = 1');
@@ -187,18 +187,18 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
             // array for unique names and folders
             $unique_names = array();
             echo '<div class="img-btn-contaner">';
-            foreach( $images_selected as $image ){
-              if(!in_array($image['name'],$unique_names)){
+            foreach ($images_selected as $image) {
+              if (!in_array($image['name'], $unique_names)) {
                 $unique_names[] = $image['name'];
-                ?>
-                <a class="img-btn" href="<?php echo '?id='.$_SESSION['id'].'&to=images&img_dir='.$image['name'];?>">
+              ?>
+                <a class="img-btn" href="<?php echo '?id=' . $_SESSION['id'] . '&to=images&img_dir=' . $image['name']; ?>">
                   <span>
                     <?php
-                    echo $image['name']; 
+                    echo $image['name'];
                     ?>
                   </span>
                 </a>
-                <?php
+          <?php
               }
             }
             echo '</div>';
@@ -222,31 +222,35 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
 
           <?php
             $exam_db = $db->prepare("
-            select * from exams 
-            WHERE 
-            vilablility = 1 
-            AND
-            se = '3se'
-            AND 
-            id NOT IN  (SELECT exam_id from degrees where student_id = ? )
+              SELECT *
+              FROM exams
+              WHERE
+                  vilablility = 1
+                  AND se = '3se'
+                  AND id NOT IN (SELECT exam_id FROM degrees WHERE student_id = ?)
+                  AND (
+                      (exams.start_date <= CURRENT_TIMESTAMP AND exams.end_date >= CURRENT_TIMESTAMP)
+                      OR (exams.start_date  = '0000-00-00 00:00:00' OR exams.end_date = '0000-00-00 00:00:00')
+                  )
             ");
             $exam_db->execute(array($_SESSION['id']));
 
             if ( $exam_db->rowCount() > 0 ) {
 
-              $exam_db = $exam_db->fetchAll(PDO::FETCH_ASSOC);
+              $exam_db_data = $exam_db->fetchAll(PDO::FETCH_ASSOC);
               
-          
-              foreach ( $exam_db as $prepare_exam ) {
+              
+              foreach ( $exam_db_data as $prepare_exam ) {
                 ?>
                 <tr>
-                  <td class="text-center"><a class="" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>"><?=$prepare_exam['exam_name']?></a></td>
-                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= $exams_for_3 . $prepare_exam['exam_name'] . '.php' ?>">دخول</a></td>
+                  <td class="text-center"><a class="" href="<?= "exams/exam.php?exam=". $prepare_exam['id']?>"><?=$prepare_exam['exam_name']?></a></td>
+                  <td class="text-center"><a class="btn btn-success btn-sm" href="<?= "exams/exam.php?exam=" . $prepare_exam['id']?>">دخول</a></td>
                   <td class="text-center"><?= $prepare_exam['start_date'] ?></td>
                   <td class="text-center"><?= $prepare_exam['end_date'] ?></td>
                 </tr>
                 <?php
               }
+              $exam_db->closeCursor();
          
               }
             
@@ -273,11 +277,12 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
               <?php
               $passed_exams = $db->prepare("SELECT degrees.*, exams.exam_name, exams.see_degree
               FROM degrees JOIN exams ON degrees.exam_id = exams.id WHERE student_id = ?");
-              
               $passed_exams->execute(array($_SESSION['id']));
+              
               if( $passed_exams->rowCount() > 0  ){
+                  
+
                 $passed_exams = $passed_exams->fetchAll(PDO::FETCH_ASSOC);
-        
                 foreach($passed_exams as $pass_exam){
                   ?>
                   <tr>
@@ -287,8 +292,10 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                       <?php if($pass_exam['see_degree']==0):?>
                         <a href="#" class="btn btn-success btn-sm disabled">مراجعة</a></td>
                       <?php else:?>
-                        <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['id']?>&exam_n=<?=$pass_exam['exam_name']?>" class="btn btn-success btn-sm">مراجعة</a></td>
-                      <?php endif;?>
+                        <!-- <div class="text-success">المراجعة ستتاح قريبا</div> -->
+                        <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['id']?>" class="btn btn-success btn-sm">مراجعة</a>
+
+                        <?php endif;?>
                     <td><?=$pass_exam['end_at']?></td>
                   </tr>
                   <?php
@@ -302,15 +309,15 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
             </tbody>
           </table>
           <?php
-        } elseif ( $to == 'pdf' ) {
-          if ( isset($_GET['pdf']) ) {
+        } elseif ($to == 'pdf') {
+          if (isset($_GET['pdf'])) {
             $pdf_id = filter_var($_GET['pdf'], FILTER_SANITIZE_NUMBER_INT);
-            $get_pdf = select2('*','pdf','pdf_id',$pdf_id,' && se = "3se"');
-            if ( $get_pdf != false ) {
-              foreach ( $get_pdf as $the_pdf ) {
+            $get_pdf = select2('*', 'pdf', 'pdf_id', $pdf_id, ' && se = "3se"');
+            if ($get_pdf != false) {
+              foreach ($get_pdf as $the_pdf) {
                 $pdf_link = $the_pdf['pdf'];
               }
-              echo '<iframe src="'. $pdf_link .'" width="100%" height="100%"></iframe>';
+              echo '<iframe src="' . $pdf_link . '" width="100%" height="100%"></iframe>';
             } else {
               echo '<div class="alert alert-info text-center">' . 'لا يوجد مذكرات لك الان' . '</div>';
               header('Refresh:2; url=?');
@@ -318,27 +325,30 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
             }
           } else {
             echo '<h1 class="page-title text-center">المذكرات و المراجعات PDF</h1>';
-            $select_pdf = select2('pdf_id,pdf,name','pdf','se','3se',' && vilablity = 1');
-            if ( $select_pdf != false ) {
-                // if condition for style only
-                $push_pdf = 1;
-                $col_pdf = 5;
-                if ( count($select_pdf) == 1 ) { $col_pdf = 6; $push_pdf = 3; }
-                foreach ( $select_pdf as $pdf ) {
-                  ?>
-                  <a class="ex-btn col-lg-<?php echo $col_pdf ?>
+            $select_pdf = select2('pdf_id,pdf,name', 'pdf', 'se', '3se', ' && vilablity = 1');
+            if ($select_pdf != false) {
+              // if condition for style only
+              $push_pdf = 1;
+              $col_pdf = 5;
+              if (count($select_pdf) == 1) {
+                $col_pdf = 6;
+                $push_pdf = 3;
+              }
+              foreach ($select_pdf as $pdf) {
+          ?>
+                <a class="ex-btn col-lg-<?php echo $col_pdf ?>
                             col-lg-push-<?php echo $push_pdf ?>
                             col-md-<?php echo $col_pdf ?>
                             col-md-push-<?php echo $push_pdf ?> 
                             col-sm-<?php echo $col_pdf ?> 
-                            col-sm-push-1 col-xs-10 col-xs-push-1" href="<?php echo '?id='.$_SESSION['id'].'&to=pdf&pdf='.$pdf['pdf_id']; ?>">
-                    <span>
-                      <?php
-                      echo $pdf['name'];
-                      ?>
-                    </span>
-                  </a>
-                  <?php
+                            col-sm-push-1 col-xs-10 col-xs-push-1" href="<?php echo '?id=' . $_SESSION['id'] . '&to=pdf&pdf=' . $pdf['pdf_id']; ?>">
+                  <span>
+                    <?php
+                    echo $pdf['name'];
+                    ?>
+                  </span>
+                </a>
+<?php
               }
             } else {
               echo '<div class="alert alert-info text-center">' . 'لا يوجد مذكرات لك الان' . '</div>';

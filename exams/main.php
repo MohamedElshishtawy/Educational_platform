@@ -48,7 +48,7 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
     $ans_count = 0;
 
     $student_answers = array();
-  
+    
 
     for ($ques = 0; $ques < count($exam1); $ques += 5) {
       

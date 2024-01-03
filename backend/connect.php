@@ -6,6 +6,7 @@ $u_pass = ''; // root )FxN-2i3eb8(rVXp
 $options = array(PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAME utf8');
 try{
     $db = new PDO($db_info,$u_name,$u_pass);
+    $db->exec("SET time_zone = '+02:00'");
     $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e){
