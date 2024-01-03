@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="<?php echo '../'.$css.'exam.css';?>">
   <?php
   }
-  elseif($title == 'إجاباتى'){
+  elseif($title == 'إجابات'){
     ?>
     <link rel="icon" href="<?php echo '../'.$imges.'lamb.png';?>">
     <link rel="stylesheet" href="<?php echo '../'.$bootstrab_css;?>">

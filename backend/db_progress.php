@@ -371,7 +371,6 @@ if (isset($_POST['upload_exam'])) {
       *  "a2" => "answer 2",
       *  "a3" => "answer 3",
       *  "a4" => "answer 4",
-      *  "ta" //////////////////////
       *  "n"  => "your Note"
     * ]
    * ]
@@ -409,7 +408,7 @@ if (isset($_POST['upload_exam'])) {
           $ob_no_br = filter_var($_POST['observation' . $qcount], FILTER_SANITIZE_STRING);
           $ob = nl2br($ob_no_br);
 
-          $newIMGname = $qus_img["size"] == 0 ? false : $exam_id . '_' . time() . '_' . pathinfo($qus_img['name'], PATHINFO_FILENAME);
+          $newIMGname = $qus_img["size"] == 0 ? false : $exam_id . '_' . time() . '_' . $qus_img['name'];
 
           // store the data in the exam array
           $exam[$qcount] = [
@@ -419,7 +418,6 @@ if (isset($_POST['upload_exam'])) {
               "a1" => $a1,
               "a2" => $a2,
               "a3" => $a3,
-              "at" => $at,
               "n" => $ob
           ];
 
@@ -436,13 +434,13 @@ if (isset($_POST['upload_exam'])) {
       // start to save the exam in file
       $exam_to_serialize = serialize($exam);
       $exam_location = 'exams/' . $for_se[0] . '/' . $exam_id . '.php';
-      file_put_contents($exam_location, "<?php return '" . addslashes($exam_to_serialize) . "';");
-      echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px;z-index:1000">تم الحفظ بنجاح الحمد لله</span>';
+      file_put_contents($exam_location, "<?php return \"" . addslashes($exam_to_serialize) . "\";");
+      echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">تم الحفظ بنجاح الحمد لله</span>';
   } catch (Exception $e) {
       // Log the exception details
       error_log("Exception: " . $e->getMessage() . "\n" . $e->getTraceAsString());
 
-      echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px;z-index:1000">';
+      echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">';
       echo "هناك خطأ ما<br> يرجى التكرم بالتقاط صورة لهذه الرسالة والتواصل مع المبرمج لحل هذه المشكلة بيسر وسهولة.<br> يرجى أن تكون على يقين أننا هنا لدعمك وضمان حلاً سريعًا لهذا الأمر.";
       echo "<hr>";
       echo $e->getMessage() . '</span>';

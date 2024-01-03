@@ -293,7 +293,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == '3se' && isset($_GET['id']) && 
                         <a href="#" class="btn btn-success btn-sm disabled">مراجعة</a></td>
                       <?php else:?>
                         <!-- <div class="text-success">المراجعة ستتاح قريبا</div> -->
-                        <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['exam_id']?>" class="btn btn-success btn-sm">مراجعة</a>
+                        <a href="exams/show_answers.php?student=<?=$_SESSION['id']?>&exam_id=<?=$pass_exam['id']?>" class="btn btn-success btn-sm">مراجعة</a>
 
                         <?php endif;?>
                     <td><?=$pass_exam['end_at']?></td>

@@ -284,12 +284,12 @@ function set_session_redirect($id,$name,$phone,$money,$se,$code,$state){
 
 function saveAnswersFile ($studentID, $examID,$se, $answers) {
   
-
+  $baseDir = '../answers/'.$se[0];
 
   
-  $examDir = 'answers/'.$se[0].'/'.$examID;
+  $examDir = $baseDir . '/' . $examID;
   if (!file_exists($examDir)) {
-      mkdir($examDir); // 0777 provides full permissions, adjust as needed
+      mkdir($examDir, 0777, true); // 0777 provides full permissions, adjust as needed
   }
 
   
@@ -333,24 +333,35 @@ function showExamAnsers($exam1, $answers,$student_id ,$exam_se,$db){
     // delet his time history
     $score = 0;
     $ans_count = 0;
-    $n = 0;
-  for ($ques = 0; $ques < count($exam1); $ques++) {
+
+  for ($ques = 0; $ques < count($exam1); $ques += 5) {
       echo '<div class="all-q">';
-      echo '<div class="qustion">' . $exam1[$n]['q'] . '</div>';
-      if (!$exam1[$n]['i'] == '') {
-        echo '<img src="examph/'.$exam_se[0].'/' . $exam1[$n]['i'] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+      echo '<div class="qustion">' . $exam1[$ques] . '</div>';
+      if (!$exam1[$ques + 3] == '') {
+        if ($exam_se == '1se') {
+          echo '<img src="../examph/1/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+          } elseif ($exam_se == '2se') {
+          echo '<img src="../examph/2/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+          } elseif ($exam_se == '3se') {
+          echo '<img src="../examph/3/' . $exam1[$ques + 3] . '" alt="your can\'t see this image becouse...." class="exam-image">';
+          }
       }
-      $answer_you_choese = $answers[$n] ?? '';
-    
+      $ans_round = 'q' . $ans_count;
+      
+
+      $answer_you_choese = $answers[$ans_count] ?? '';
+      
+
       //if answer of the qustio is correct
-      if ($answer_you_choese == $exam1[$n]['at']) {
+      if ($answer_you_choese == $exam1[$ques + 2]) {
+        $score++;
         //palce all ansers but the true will be green background
-        for ($ans = 0; $ans < 4; $ans++) {
+        for ($ans = 0; $ans < count($exam1[$ques + 1]); $ans++) {
           //select good ans you chose
-          if ('a'.$ans == $exam1[$n]['at']) {
-            echo '<span class="ans true">' . $exam1[$n]['a'.$ans] . '</span>';
+          if ('a' . $ans == $answer_you_choese) {
+            echo '<span class="ans true">' . $exam1[$ques + 1][str_replace('a', '', $answer_you_choese)] . '</span>';
           } else {
-            echo '<span class="ans">' . $exam1[$n]['a'.$ans] . '</span>';
+            echo '<span class="ans">' . $exam1[$ques + 1][$ans] . '</span>';
           }
         }
       }
@@ -359,28 +370,27 @@ function showExamAnsers($exam1, $answers,$student_id ,$exam_se,$db){
       else {
 
         //palce all ansers the true will be yellow background and wrrong will be red
-        for ($ans = 0; $ans < 4; $ans++) {
+        for ($ans = 0; $ans < count($exam1[$ques + 1]); $ans++) {
 
-          //select wrrong an s you chose
-          if ('a'.$ans == $answer_you_choese) {
-            echo '<span class="ans wrrong">' . $exam1[$n]['a'.$ans] . '</span>';
-          } elseif ('a'.$ans == $exam1[$n]['at']) {
-            echo '<span class="ans the_true">' . $exam1[$n]['a'.$ans]. '</span>';
+          //select wrrong ans you chose
+          if ('a' . $ans == $answer_you_choese) {
+            echo '<span class="ans wrrong">' . $exam1[$ques + 1][str_replace('a', '', $answer_you_choese)] . '</span>';
+          } elseif ('a' . $ans == $exam1[$ques + 2]) {
+            echo '<span class="ans the_true">' . $exam1[$ques + 1][str_replace('a', '', $exam1[$ques + 2])] . '</span>';
           } else {
-            echo '<span class="ans">' . $exam1[$n]['a'.$ans] . '</span>';
+            echo '<span class="ans">' . $exam1[$ques + 1][$ans] . '</span>';
           }
         }
       }
-      if (!$exam1[$n]['n'] == '') {
-        echo '<br><div class="alert alert-warning">*ملحوظة: <br>' . $exam1[$n]['n'] . '</div>';
+      if (!$exam1[$ques + 4] == '') {
+        echo '<br><div class="alert alert-warning">*ملحوظة: <br>' . $exam1[$ques + 4] . '</div>';
       }
       echo '</div>';
 
       $ans_count++;
-      $n++;
     }
     // place a btn [to go index] && the score he had
-    echo '<form method="post" action="../"><button type="submit" class="btn btn-info text-center"><i class="fa fa-thumbs-up"></i> حسنا</button></form>';
+    echo '<form method="post" action="../../"><button type="submit" class="btn btn-info text-center"><i class="fa fa-thumbs-up"></i> حسنا</button></form>';
     echo '<hr>';
 }
 
@@ -424,19 +434,5 @@ function handleImageUploadError($errorCode, $imageName) {
   }
 
   echo '<span class="alert alert-danger" style="position:relative;top:10px;right:5px">' . $errorMessage . '</span>';
-}
-
-function getFirstTwoDecimalDigits($number) {
-    // Extract the decimal part of the number
-    $decimalPart = fmod($number, 1);
-
-    // Multiply by 100 to shift the decimal digits to the left
-    $decimalPart *= 100;
-
-    // Cast to an integer to truncate any additional decimal digits
-    $decimalDigits = (int)$decimalPart;
-
-    // Return the result
-    return $decimalDigits;
 }
 ?>

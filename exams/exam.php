@@ -12,16 +12,13 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
     header('location: ../');
     exit();
 }
-/** @var STRING $connect */
-/** @var String $functions */
+
 //prepare page
 include_once '../init.php';
-
 include_once '../' . $connect;
 include_once '../' . $functions;
 
 $title = 'امتحان';
-/** @var string $header */
 include_once '../' . $header;
 
 date_default_timezone_set('Africa/Cairo');
@@ -33,12 +30,11 @@ $student_id = $_SESSION['id'];
 $exam_id = $_GET['exam'] ?? false;
 if (!$exam_id) {
     session_destroy();
-    header("location: ../");
+    header("locatio: ../");
     exit();
 }
 
 // Get Exam data
-/** @var object $db */
 $exam_db = $db->prepare('SELECT * FROM exams WHERE id = ?');
 $exam_db->execute(array($exam_id));
 if ($exam_db->rowCount() > 0) {
@@ -47,9 +43,8 @@ if ($exam_db->rowCount() > 0) {
     message("الإمتحان لم يعد متاحا", "danger", "../");
 }
 
-// If all is wright check the file first of making decisions with local storage
+// If all is wright check the file first of making dessions with local storage
 try {
-  global $exam1;
     $exam_file = include_once $exam['se'][0] . "/" . $exam['id'] . ".php";
     $exam1 = stripslashes($exam_file);
     $exam1 = unserialize($exam1);
@@ -67,30 +62,28 @@ if ($check->rowCount() > 0) {
     exit();
 }
 
-// if your http referer is included to="exams" => open the exam to solute Or includ exam id
+// if your http referer is incloude to="exams" => open the exam to solute Or incloud exam id
 $http_referer = $_SERVER['HTTP_REFERER']  ??  '';
-$last_value_http    = strstr($http_referer, '&');
+$last_value_http    = strstr($http_referer, '&', false);
 $last_value_my_link = array_reverse(explode('/', $_SERVER['PHP_SELF']));
 if ($last_value_http != '&to=exams' /*|| $last_value_my_link[0] != $exam_id*/) {
     header('location: ../index.php');
 }
-$open_exam = true;
+
 // Check The timer
 $time_history  = select_info('*', 'timer', 'student_id', $student_id);
 $duration = (int)$exam['duration'] * 60; // sec
 
 if ($time_history) { // There is Time in history
-    $started_time = strtotime($time_history[0]['start_time']);
+    $started_time = strtotime($time_history[0]['back_time']);
     $time_now = new DateTime();
-    if ($time_history[0]['exam_id'] != $exam_id) { // There is data for another Exam in the localstorage and Time db;
-    $open_exam = false;
-
-      ?>
+    if ($time_history['exam_id'] != $exam_id) { // There is data for another Exam in the localstorage and Time db;
+?>
         <form method="POST" class="message col-lg-6 col-lg-push-3 col-md-6 col-md-push-3 col-sm-6 col-sm-push-3 col-xs-10 col-xs-push-1">
             <h2 class="text-center">تحذير</h2>
             <section>
                 <div><span>*</span> هناك امتحان لا تزال تمتحنه</div>
-                <div>الإمتحان: <b><?php echo str_replace('_', ' ', $time_history[0]['exam_id']); ?></b></div>
+                <div>الإمتحان: <b><?php echo str_replace('_', ' ', $time_history['exam_id']); ?></b></div>
                 <div>المعلومات</div>
                 <ol>
                     <li>وقتك المتبقي لك</li>
@@ -102,8 +95,7 @@ if ($time_history) { // There is Time in history
                 <button type="submit" name="delete_info" class="btn btn-danger">إزالة المعلومات</button>
                 <button type="submit" name="out" class="btn btn-info">الخروج من هذا الإمتحان</button>
             </div>
-            
-          </form>
+            </div>
     <?php
         if (isset($_POST['delete_info'])) {
             $go_in_exam = true;
@@ -118,45 +110,43 @@ if ($time_history) { // There is Time in history
         $delet_time_history = $db->prepare("DELETE FROM timer WHERE student_id = $student_id");
         $delet_time_history->execute();
     }
-    // Else is the time is running, and we have edit the duration var in the if(-) and the start date still in rhe database as the same
+    // Else is the time is running and we have edit the duraiion var in the if(-) and the startr date still in rhe database as the same
 } else {
     $set_timer = $db->prepare("INSERT INTO timer (student_id,exam_id) VALUES (?,?) ");
     $set_timer->execute(array($student_id, $exam['id']));
 }
 
-if ($open_exam){
-      // open 
-    echo '<br><br><br><h2 class="text-center" id="examHeader">' . str_replace('_', ' ', $exam['exam_name']) . '</h2><br>';
+
+// open 
+echo '<br><br><br><h2 class="text-center" id="examHeader">' . str_replace('_', ' ', $exam['exam_name']) . '</h2><br>';
 
     ?>
     <form method="POST" name="myform">
         <div class="exam-nav" id="timer">
             <span class="min" id="min"></span>
-            <progress class="sec" id="sec" max="<?= $exam['duration'] /*sec*/ ?>" value="<?= $duration ?>"></progress>
+            <progress class="sec" id="sec" max="<?= $duration /*sec*/ ?>" value=""></progress>
         </div>
         <?php
-        $x = 0;
+        $z = 0;
         echo '<ol>';
-        for ($x; $x < count($exam1); $x++) {
-          $count_of_questions = count($exam1);  
-          echo '<div class="all-q">';
-            echo '<div class="qustion"><li>' . $exam1[$x]['q'] . '</li></div>';
-            if (!$exam1[$x]['i'] == '') {
-                echo '<img src="examph/' . $exam['se'][0] . '/' . $exam1[$x]['i'] . '" alt="Physics Image" class="exam-image">';
+        for ($x = 0; $x < count($exam1); $x += 5) {
+            echo '<div class="all-q">';
+            echo '<div class="qustion"><li>' . $exam1[$z]['q'] . '</li></div>';
+            if (!$exam1[$z]['i'] == '') {
+                echo '<img src="../examph/' . $exam['se'][0] . '/' . $exam1[$z]['i'] . '" alt="Physics Image" class="exam-image">';
             }
             for ($y = 0; $y < 4; $y++) {
-                echo '<span class="answer"><input  type="radio" id="q' . $x . 'a' . $y . '" name="q' . $x . '" value="a' . $y . '">';
-                echo '<label for="q' . $x . 'a' . $y . '">' . $exam1[$x]['a' . $y] . '</label></span>';
+                echo '<span class="answer"><input  type="radio" id="q' . $z . 'a' . $y . '" name="q' . $z . '" value="a' . $y . '">';
+                echo '<label for="q' . $z . 'a' . $y . '">' . $exam1[$z]['a' . $y] . '</label></span>';
             }
             echo '</div>';
+            $z++;
         }
         echo '</ol>';
         echo '<button name="end"  id="form" type="submit" class="btn btn-info">done <i class="fa fa-clipboard-check"></i></button>';
         echo '</form>';
 
-}
-
-if (isset($_POST['end'])) {
+        if (isset($_POST['end'])) {
 
             // delete answers info
             echo '<script>localStorage.clear();</script>';
@@ -171,7 +161,7 @@ if (isset($_POST['end'])) {
             $student_answers = array();
 
 
-            for ($ques = 0; $ques < count($exam1); $ques++) {
+            for ($ques = 0; $ques < count($exam1); $ques += 5) {
 
                 $ans_round = 'q' . $ans_count;
 
@@ -185,7 +175,7 @@ if (isset($_POST['end'])) {
                 $student_answers[$ans_count] = $answer_you_choese;
 
                 //if answer of the qustio is correct
-                if ($answer_you_choese == $exam1['at']) {
+                if ($answer_you_choese == $exam1[$ques + 2]) {
                     $score++;
                 }
 
@@ -199,11 +189,78 @@ if (isset($_POST['end'])) {
             $save_deg->execute(array($student_id, $exam_id, $deg));
 
             // upload file for answers
-            
-            saveAnswersFile($student_id, $exam_id, $_SESSION['se'], $student_answers);
+            saveAnswersFile($student_id, $exam_name, $exam_se, $student_answers);
 
 
+            if (!$time_you_have == 0 || !$time_you_have == '') {
+                // place his score in DB progres
+                if ($exam_se == '1se') {
+                    $student_fetch = $db->prepare("SELECT * FROM exams_for_1 WHERE student_id = ?");
+                } elseif ($exam_se == '2se') {
+                    $student_fetch = $db->prepare("SELECT * FROM exams_for_2 WHERE student_id = ?");
+                } elseif ($exam_se == '3se') {
+                    $student_fetch = $db->prepare("SELECT * FROM exams_for_3 WHERE student_id = ?");
+                }
+                $student_fetch->execute(array($student_id));
 
+                if ($student_fetch->rowCount() > 0) {
+
+                    $student_ex_informations = $student_fetch->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($student_ex_informations as $student_ex_information) {
+
+                        $field_data = $student_ex_information[$exam_name];
+                        // conditions of the val
+                        if (empty($field_data) || $field_data == '0' || $field_data == 'NULL') {
+
+                            $set_deg_info = $deg . ' ^1';
+                            if ($exam_se == '1se') {
+                                $place_the_score_update = $db->prepare("UPDATE exams_for_1 SET $exam_name = '$set_deg_info' WHERE student_id = $student_id ");
+                            } elseif ($exam_se == '2se') {
+                                $place_the_score_update = $db->prepare("UPDATE exams_for_2 SET $exam_name = '$set_deg_info' WHERE student_id = $student_id ");
+                            } elseif ($exam_se == '3se') {
+                                $place_the_score_update = $db->prepare("UPDATE exams_for_3 SET $exam_name = '$set_deg_info' WHERE student_id = $student_id ");
+                            }
+                            $place_the_score_update->execute();
+
+                            echo '<span class="alert alert-success die" style="position:absolute;top:10px;right:5px">تم تخزين درجتك مع المعلم</span>';
+                        }
+                        // if there is value in his field in exam
+                        else {
+                            // set qustion with deffrense color
+                            echo '<script>document.getElemantByClassName("qustion").style.background= "rosybrown"</script>';
+                            // set the couner of visits
+                            $score_data = $student_ex_information[$exam_name];
+                            $num_visits = str_replace('^', '', strstr($score_data, '^', false));
+                            $edited_num_visits = (int)$num_visits + 1;
+
+                            $old_deg = strstr($score_data, '^', true);
+                            $new_visit_with_score = $old_deg . '^' . $edited_num_visits;
+
+                            if ($exam_se == '1se') {
+                                $place_the_visit_update = $db->prepare("UPDATE exams_for_1 SET $exam_name = '$new_visit_with_score' WHERE student_id = $student_id ");
+                            } elseif ($exam_se == '2se') {
+                                $place_the_visit_update = $db->prepare("UPDATE exams_for_2 SET $exam_name = '$new_visit_with_score' WHERE student_id = $student_id ");
+                            } elseif ($exam_se == '3se') {
+                                $place_the_visit_update = $db->prepare("UPDATE exams_for_3 SET $exam_name = '$new_visit_with_score' WHERE student_id = $student_id ");
+                            }
+                            $place_the_visit_update->execute();
+                        }
+                    }
+                } else {
+                    if ($exam_se == '1se') {
+                        $insert55 = $db->prepare("INSERT INTO exams_for_1 (student_id,$exam_name) VALUES (?,?)");
+                    } elseif ($exam_se == '2se') {
+                        $insert55 = $db->prepare("INSERT INTO exams_for_2 (student_id,$exam_name) VALUES (?,?)");
+                    } elseif ($exam_se == '3se') {
+                        $insert55 = $db->prepare("INSERT INTO exams_for_3 (student_id,$exam_name) VALUES (?,?)");
+                    }
+                    $set_deg_info = $deg . ' ^1';
+                    $insert55->execute(array($_SESSION['id'], $set_deg_info));
+
+                    echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">تم تخزين درجتك مع المعلم</span>';
+                }
+            }
             $_SESSION['message'] = '<span class="alert alert-success" style="position:absolute;top:10px;right:5px;z-index:1000">بالتوفيف تم تخزين درجتك مع المعلم</span>';
             header('location: ../');
             exit();
@@ -214,14 +271,14 @@ if (isset($_POST['end'])) {
                 <script>
                     <?php
 
-                    // now I will place a js submit prosess when $submit is true 
-                    if (isset($submit) && $submit ) {
+                    // now i will place a js submit prosess when $submit is true 
+                    if (isset($submit) && $submit == true) {
                         echo 'document.getElementById("form").click();';
                         echo 'localStorage.clear();';
                     } else {
                     ?>
                         // localStorage settings
-                        let local = localStorage,
+                        var local = localStorage,
                             exam_in_local = local.getItem('examName'),
                             this_exam = document.getElementById('examHeader').innerHTML;
 
@@ -233,16 +290,19 @@ if (isset($_POST['end'])) {
                         /**
                          * observation !!
                          * $min_you_have_js => get all min you have from db
-                         * $min2sec_you_have_js => it change $min_you_have_js to sec [I use this var in progresses bar]
+                         * $min2sec_you_have_js => it change $min_you_have_js to sec [i use this var in progresses bar]
                          * $sec_you_have_js => it is the realy secounds you have from the moment min
                          */
-                        
-                        
-                        /** @var INT $diff_sec */
-                        $sec_you_have_js     = $duration; // I time it with 60 because I return $diff_sec to min in formating progress
+                        if (substr_count($the_min_you_have, '.') > 0) {
+                            $min_you_have_js = strstr($the_min_you_have, '.', true);
+                        } else {
+                            $min_you_have_js = $the_min_you_have;
+                        }
+                        $min2sec_you_have_js = $min_you_have_js * 60;
+                        $sec_you_have_js     = $diff_sec * 60; // i time it with 60 because I return $diff_sec to min in formating progress
                         ?>
-                        let minYouHave = <?php echo floor($duration/60 ); ?>,
-                            secYouHave = <?php echo getFirstTwoDecimalDigits($duration/60) ; ?>,
+                        var minYouHave = <?php echo $min_you_have_js; ?>,
+                            secYouHave = <?php echo $sec_you_have_js; ?>,
                             min2sec = minYouHave * 60,
                             timerCounterSpan = document.getElementById('min'),
                             counterBar = document.getElementById('sec'),
@@ -279,8 +339,8 @@ if (isset($_POST['end'])) {
                                     }
                                 }
 
-                                counterBar.setAttribute('max', <?= $exam['duration'] * 60   ?>);
-                                counterBar.setAttribute('value', ((minYouHave*60)+secYouHave) );
+                                counterBar.setAttribute('max', <?php echo  $time_you_have * 60; ?>);
+                                counterBar.setAttribute('value', min2sec);
                             }, 1000);
 
                     <?php
@@ -292,12 +352,11 @@ if (isset($_POST['end'])) {
                 ?>
                 <script>
                     // localStorage settings
-                    let local = localStorage,
+                    var local = localStorage,
                         exam_in_local = local.getItem('examName'),
                         this_exam = document.getElementById('examHeader').innerHTML;
 
-                    
-                    if ( ! exam_in_local || exam_in_local !== this_exam) {
+                    if (exam_in_local == NUll || exam_in_local !== this_exam) {
                         localStorage.clear();
                         localStorage.setItem('examName', this_exam);
                         window.alert('haell');
@@ -308,7 +367,6 @@ if (isset($_POST['end'])) {
         }
 
 
-        /** @var STRING $footer */
-include_once '../' . $footer;
+        include_once '../' . $footer;
 
         ob_end_flush();

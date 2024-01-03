@@ -34,14 +34,6 @@
     <script src="<?php echo '../'.$js.'all_js.js';?>"></script>
     <?php
     }
-    elseif($title=="إجاباتى"){
-      ?>
-      <script src="<?php echo '../'.$jquery;?>"></script>
-      <script src="<?php echo '../'.$bootstrap_js;?>"></script>
-      <script src="<?php echo '../'.$fontawesome_js;?>"></script>
-      <script src="<?php echo '../'.$js.'all_js.js';?>"></script>
-      <?php
-      }
   ?>
   
 </body>
