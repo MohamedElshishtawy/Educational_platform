@@ -1,1 +1,0 @@
-<?php $exam_name = 'exam';$time_you_have = 90;$exam_se = '3se';$exam1 = array('mmmm',array('3','4','5','6'),'a0','','jjjjjjj','oooo',array('ooo','oo','oo','uu'),'a1','','',);  

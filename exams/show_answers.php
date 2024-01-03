@@ -59,18 +59,24 @@ if ($student_id != $_SESSION['id']) { // the admin or another student
   }
 } else{
   $title = 'إجاباتى';
-    include_once '../' . $header;
+  include_once '../' . $header;
+  echo '<br><br><br><h2 class="text-center" id="examHeader">' . str_replace('_', ' ', $exam['exam_name']) . '</h2><br>';
+
+
     // Get Answers for the student from the file
     $answer_location = 'answers/'.$student_se[0].'/'.$exam_id.'/'.$student_id.'.php';
     $file_content = include_once $answer_location;
     $file_content = stripslashes($file_content);
     $answers = unserialize($file_content);
-  
+    
     // Get the exam question grom the file
     $exam_location = $student_se[0].'/'.$exam_id.'.php';
-    $exam_content  = include_once $exam_location; // Include $eaxm1 (all questions) // Include the main.php
+    $exam_content  = include_once $exam_location; 
     $exam_content = stripslashes($exam_content);
     $exam1 = unserialize($exam_content);
+
+ 
+    
     showExamAnsers($exam1, $answers, $student_id, $student_se, $db);
   
     include_once '../' .$footer;

@@ -292,7 +292,7 @@ if (!isset($_SESSION['phone']) || !$_SESSION['se'] == '1se' || !$_SESSION['se'] 
         <?php
 
         // now i will place a js submit prosess when $submit is true 
-        if (isset($submit) && $submit == true) {
+        if (isset($submit) && $submit ) {
           echo 'document.getElementById("form").click();';
           echo 'localStorage.clear();';
         } else {

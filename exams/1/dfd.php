@@ -1,1 +1,0 @@
-<?php $exam_name = 'dfd';$time_you_have = 2;$exam_se = '1se';$exam1 = array('df',array('df','fd','fd','fdf'),'a1','','',);  include_once '../main.php';
