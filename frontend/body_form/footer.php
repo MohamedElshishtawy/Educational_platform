@@ -23,7 +23,7 @@
   <script src="<?php echo $bootstrap_js;?>"></script>
   <script src="<?php echo $fontawesome_js;?>"></script>
   <script src="<?php echo $js.'all_js.js';?>"></script> 
-  <script src="<?php echo $js.'add_ex.js';?>"></script>
+  <script src="<?php echo $js.'add_ex.js?2';?>"></script>
   <?php
   }
   elseif($title=="امتحان"){

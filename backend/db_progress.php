@@ -349,16 +349,7 @@ if ( isset($_POST['generate_code3']) ){
 /** End Generate Code */
 
 /*////////////////////////////////////////////////////////*/
-function uploadExam($db) {
-  if (isset($_POST['upload_exam'])) {
-      
-  }
-}
 
-
-
-// Example usage
-uploadExam($db);
 /* start upload an exam */
 if (isset($_POST['upload_exam'])) {
   /**
@@ -418,6 +409,7 @@ if (isset($_POST['upload_exam'])) {
               "a1" => $a1,
               "a2" => $a2,
               "a3" => $a3,
+              "at" => $at,
               "n" => $ob
           ];
 
@@ -447,6 +439,109 @@ if (isset($_POST['upload_exam'])) {
   }
 }
 /* end upload an exam */
+
+if ( isset($_POST['edit_exam']) ){
+  
+  $exam_id = $_GET['exam_id'];
+
+  $exam_db = $db->prepare("SELECT * FROM exams WHERE id = ?");
+  $exam_db->execute([$exam_id]);
+  $exam_info = $exam_db->fetchAll(PDO::FETCH_ASSOC)[0];
+  
+  // Validate and sanitize input
+  $exam_name_with_space = filter_var($_POST['exam_name'], FILTER_SANITIZE_STRING);
+  $exam_name = str_replace(' ', '_', $exam_name_with_space);
+  $time_of_exam = filter_var($_POST['exam_time'], FILTER_SANITIZE_STRING);
+  $start_date = filter_var($_POST['exam_date_start'], FILTER_SANITIZE_STRING) ?? NULL;
+  $end_date = filter_var($_POST['exam_date_end'], FILTER_SANITIZE_STRING) ?? NULL;
+  $for_se = filter_var($_POST['se'], FILTER_SANITIZE_STRING);
+
+  try {
+    // Insert The Exam to the Exam Table
+    $update_exam_db = $db->prepare("
+        UPDATE exams
+        SET 
+            exam_name=?,
+            se=?,
+            duration=?,
+            start_date=?,
+            end_date=?
+        WHERE
+            id = ?
+       ");
+    $update_exam_db->execute([$exam_name, $for_se, $time_of_exam, $start_date, $end_date, $exam_id]);
+
+    $amount_of_qustions = filter_var($_POST['qustions_count'], FILTER_SANITIZE_STRING);
+
+  
+    $exam_file_f = require 'exams/'.$exam_info['se'][0].'/'.$exam_info['id'].".php";
+    $exam_old = unserialize(stripcslashes($exam_file_f));
+  
+    $exam = array();
+    for ($qcount = 0; $qcount < $amount_of_qustions; $qcount++) {
+      // Collect the Question data
+      $qustion_no_br = filter_var($_POST['q' . $qcount], FILTER_SANITIZE_STRING);
+      $qustion = nl2br($qustion_no_br);
+      $a0 = filter_var($_POST['a0' . $qcount], FILTER_SANITIZE_STRING);
+      $a1 = filter_var($_POST['a1' . $qcount], FILTER_SANITIZE_STRING);
+      $a2 = filter_var($_POST['a2' . $qcount], FILTER_SANITIZE_STRING);
+      $a3 = filter_var($_POST['a3' . $qcount], FILTER_SANITIZE_STRING);
+      $at = filter_var($_POST['true_for_q_' . $qcount], FILTER_SANITIZE_STRING);
+      $qus_img = $_FILES['image_for_q_' . $qcount];
+      $ob_no_br = filter_var($_POST['observation' . $qcount], FILTER_SANITIZE_STRING);
+      $ob = nl2br($ob_no_br);
+      
+      if(isset($exam_old[$qcount]['i']) && $exam_old[$qcount]['i'] != ''){
+        $newIMGname = $exam_old[$qcount]['i'];
+      }else{
+        $newIMGname = $qus_img["size"] == 0 ? false : $exam_id . '_' . time() . '_' . $qus_img['name'];
+        // Upload the image 
+        if ($qus_img["size"] > 0 && $qus_img['error'] == 0) {
+          $img_se = str_replace('se', '', $for_se);
+          $qustion_img_upload = move_uploaded_file($qus_img['tmp_name'], 'exams/examph/' . $img_se . '/' . $newIMGname);
+        } elseif ($qus_img["size"] > 0) {
+          // Only handle errors if a file was attempted to be uploaded
+          handleImageUploadError($qus_img['error'], $qus_img['name']);
+        }
+      }
+
+      // store the data in the exam array
+      $exam[$qcount] = [
+        "q" => $qustion,
+        "i" => $newIMGname,
+        "a0" => $a0,
+        "a1" => $a1,
+        "a2" => $a2,
+        "a3" => $a3,
+        "at" => $at,
+        "n" => $ob
+      ];
+
+      
+    }
+
+    // start to save the exam in file
+    $exam_to_serialize = serialize($exam);
+    $exam_location = 'exams/' . $for_se[0] . '/' . $exam_id . '.php';
+    file_put_contents($exam_location, "<?php return \"" . addslashes($exam_to_serialize) . "\";");
+    echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">تم الحفظ بنجاح الحمد لله</span>';
+  } catch (Exception $e) {
+    // Log the exception details
+    error_log("Exception: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+
+    echo '<span class="alert alert-success" style="position:absolute;top:10px;right:5px">';
+    echo "هناك خطأ ما<br> يرجى التكرم بالتقاط صورة لهذه الرسالة والتواصل مع المبرمج لحل هذه المشكلة بيسر وسهولة.<br> يرجى أن تكون على يقين أننا هنا لدعمك وضمان حلاً سريعًا لهذا الأمر.";
+    echo "<hr>";
+    echo $e->getMessage() . '</span>';
+  }
+  
+  // Delete the database
+  // Delete the file
+  // delete the photo
+  // (X)delete the answer
+  // (X) delete degrees -> from relation
+}
+
 
 /*////////////////////////////////////////////////////////*/
 

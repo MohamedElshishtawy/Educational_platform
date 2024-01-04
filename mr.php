@@ -521,6 +521,7 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
               <th>الصف</th>
               <th>من</th>
               <th>الى</th>
+              <th>تعديل</th>
               <th>حذف</th>
               <th>الفاعلية <button type="submit" name="save_exam_avilability" class="btn btn-success">حفظ <i class="fa fa-save"></i></button></th>
               <th>ظهور الدرجة <button type="submit" name="save_exam_degree_avilability" class="btn btn-success">حفظ <i class="fa fa-save"></i></button></th>
@@ -536,7 +537,8 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
                   <td><?php echo $exam_select['se']; ?></td>
                   <td><?php echo $exam_select['start_date']; ?></td>
                   <td><?php echo $exam_select['end_date']; ?></td>
-                  <td><a href="members.php?del_exam=<?php echo str_replace(' ', '_', $exam_select['exam_name']); ?>" class="btn btn-danger">حذف</a></td>
+                  <td><a href="mr.php?to=edit_exam&exam_id=<?=$exam_select['id']?>" class="btn btn-primary">تعديل</a></td>
+                  <td><a href="members.php?del_exam=<?=$exam_select['id']?>" class="btn btn-danger">حذف</a></td>
                   <td>
                     <?php
                     if ($exam_select['vilablility'] == 1) {
@@ -1203,7 +1205,149 @@ if (isset($_SESSION['se']) && $_SESSION['se'] == 'AD' && $_SESSION['id'] == '185
             </table>
           </form>
     <?php
-      } else {
+      }
+    else if ($_GET['to'] == 'edit_exam' && isset($_GET['exam_id'])){
+      $exam_id = $_GET['exam_id'];
+      // Get the exam Data 
+      $exam_db = $db->prepare("SELECT * FROM exams WHERE id = ?");
+      $exam_db->execute([$exam_id]);
+      
+      if ( $exam_db->rowCount() == 0 ){
+        message("This Exam is not in the database" , "danger", "?to=add_exam");
+        header("location: ?to=add_exam");
+        exit();
+      }
+      $exam_info = $exam_db->fetchAll(PDO::FETCH_ASSOC)[0];
+      // Get the exam Data from the file
+      try{
+        $exam_file_f = require 'exams/'.$exam_info['se'][0].'/'.$exam_info['id'].".php";
+        $exam_data = unserialize(stripcslashes($exam_file_f));
+      }catch (Exception $e){
+        message("Cant Open The file<br>".$e , "danger", "?to=add_exam");
+        header("location: ?to=add_exam");
+        exit();
+      }
+      // If all Filters have been done lets open the exam
+      ?>
+      <form method="post" class="back">
+          <button type="submit" name="back_ad" class="btn btn-success"><i class="fa fa-chevron-left"></i></button>
+      </form>
+      <form method="POST" class="quis-fr" enctype="multipart/form-data">
+        <h2 class="title">تعديل امتحان</h2>
+        <div class="se-chose">
+          <div class="se-title"> <i class="fa fa-users"></i> الامتحان للصف:</div>
+          <div><input type="radio" <?= $exam_info['se']=='1se'?" checked ":''?> name="se" id="se11" value="1se"> <label for="se11" class="se-value">الصف الاول الثانوي</label></div>
+          <div><input type="radio" <?= $exam_info['se']=='2se'?" checked ":''?>name="se" id="se22" value="2se"> <label for="se22" class="se-value">الصف الثاني الثانوي</label></div>
+          <div><input type="radio" <?= $exam_info['se']=='3se'?" checked ":''?>name="se" id="se33" value="3se"> <label for="se33" class="se-value">الصف الثالث الثانوي</label></div>
+        </div>
+        <div class="exam-mains">
+            <div class="main-title"> <i class="fa fa-users"></i> المعلومات الاساسية للامتحان</div>
+            <hr>
+            <div>
+              <label class="exam-txt"> <i class="fa fa-edit"></i> عنوان الامتحان</label>
+              <input  type="text"
+                      name="exam_name" 
+                      id="exam_name" 
+                      class="input" 
+                      placeholder="عنوان ليتمكن طلابك من معرفة محتوي الامتحان"
+                      value = <?= $exam_info['exam_name'] ?? '' ?>
+                       >
+              <i class="fa fa-edit icons"></i>
+            </div>
+            <hr>
+            <div>
+              <label class="exam-txt"> <i class="fa fa-stopwatch "></i> عدد الدقائق</label>
+              <input type="number" min="0" value="<?= $exam_info['duration'] ?? '' ?>" name="exam_time" id="exam_time" class="input input-num">
+            </div>
+            <hr>
+            <div>
+              <label class="exam-txt"> <i class="fa fa-stopwatch "></i> الفترة المتاحة</label>
+              <label for="start_date">من</label>
+              <input  type="datetime-local"
+                      name="exam_date_start"
+                      id="start_date"
+                      class="date-input"
+                      value="<?= $exam_info['start_date'] ?? '' ?>"
+                      >
+              <label for="end_date">الى</label>
+              <input type="datetime-local" name="exam_date_end" id="end_date" class="date-input" value="<?= $exam_info['end_date'] ?? '' ?>">
+            </div>
+          </div>
+        <div class="exam-div" id="examDiv">
+          <div id="ex" class="ex">
+            <h2 id="nameEx"><?= $exam_info['exam_name'] ?? '' ?></h2>
+            <input type="hidden" id="qustionNum" name="qustions_count" value="<?=count($exam_data)?>">
+            <ol class="counter-ol" id="counterOL">
+      <?php
+      $n = 0;
+      foreach ($exam_data as $exam):
+        ?>
+               <hr id="hr<?=$n?>">
+               <div class="ex-div" id="qusDiv<?=$n?>">
+                  <li class="q-num" id="h<?=$n?>"></li>
+                <textarea type="text" class="form-control q-input" id="exInput<?=$n?>" placeholder="ضع هنا السؤال" name="q<?=$n?>">
+                <?=$exam['q']?>
+                </textarea>
+                <input type="file" class="file-input" id="fileInput<?=$n?>" name="image_for_q_<?=$n?>">
+                <?php if($exam['i']): ?>
+                <img src="exams/examph/<?=$exam_info['se'][0].'/'.$exam['i']?>" alt="">
+                <?php endif;?>
+                
+                <input type="text" class="form-control a-input" id="exInput<?=$n?>" placeholder="الاجابة الأولى" name="a0<?=$n?>"   value="<?=$exam['a0']?>">
+                <input type="text" class="form-control a-input" id="exInput<?=$n?>" placeholder="الاجابة الثانية" name="a1<?=$n?>" value="<?=$exam['a1']?>">
+                <input type="text" class="form-control a-input" id="exInput<?=$n?>" placeholder="الاجابة الثالثة" name="a2<?=$n?>" value="<?=$exam['a2']?>">
+                <input type="text" class="form-control a-input" id="exInput<?=$n?>" placeholder="الاجابة الرابعة" name="a3<?=$n?>" value="<?=$exam['a3']?>">
+                
+                <h4 class="true-q-txt" id="trueTxt<?=$n?>">الاجابة الصحيحة هي:</h4>
+                
+                <div class="true-ans-div" id="trueAnsDiv<?=$n?>0">
+                <input type="radio" class="rd-input" id="radio<?=$n?>0" name="true_for_q_<?=$n?>" value="a0" <?= $exam['at'] == 'a0' ? " checked" : ''?> >
+                <label class="rad-label" for="radio<?=$n?>0" id="label<?=$n?>0">الاجابة الاولي</label>
+                </div>
+                
+                <div class="true-ans-div" id="trueAnsDiv<?=$n?>1">
+                <input type="radio" class="rd-input" id="radio<?=$n?>1" name="true_for_q_<?=$n?>" value="a1" <?=$exam['at'] == 'a1' ? " checked" : ''?> >
+                <label class="rad-label" for="radio<?=$n?>1" id="label<?=$n?>1">الاجابة الثانية</label>
+                </div>
+                
+                <div class="true-ans-div" id="trueAnsDiv<?=$n?>2">
+                <input type="radio" class="rd-input" id="radio<?=$n?>2" name="true_for_q_<?=$n?>" value="a2"<?=$n?>" <?=$exam['at'] == 'a2' ? " checked" : ''?> >
+                <label class="rad-label" for="radio<?=$n?>2" id="label<?=$n?>2">الاجابة الثالثة</label>
+                </div>
+                
+                <div class="true-ans-div" id="trueAnsDiv<?=$n?>3">
+                <input type="radio" class="rd-input" id="radio<?=$n?>3" name="true_for_q_<?=$n?>" value="a3"<?=$n?>" <?=$exam['at'] == 'a3' ? " checked" : ''?> >
+                <label class="rad-label" for="radio<?=$n?>3" id="label<?=$n?>3">الاجابة الرابعة</label>
+                </div>
+                
+                <textarea type="text" class="form-control observ-input" id="observInput<?=$n?>" placeholder="ضع ملحوظتك علي السؤال" name="observation<?=$n?>">
+                <?=$exam['n']?>
+                </textarea>
+                
+              
+              <?php
+              $n++;
+              endforeach;
+              ?>
+        </ol>
+          </div>
+          <hr>
+            <div class="btn-div">
+              <div class="btn btn-success add-qustion" id="addQustion">
+                <i class="fa fa-plus"></i>
+                أضف سؤالا
+              </div>
+              <span class="badge"><input type="number" min="0" value="1" class="num-of-qus-inp" id="numOFq"></span>
+            </div>
+            <div class="btn btn-danger delete-btn" id="deleteQustion"><i class="fa fa-times"></i> إزالة اخر سؤال</div>
+            <button type="submit" class="btn btn-info add-ex-btn" name="edit_exam">
+              <i class="fa fa-upload"></i> تعديل لامتحان
+            </button>
+        </div>
+        
+        </form>
+          <?php
+    }else {
         header('location: ?');
       }
     }

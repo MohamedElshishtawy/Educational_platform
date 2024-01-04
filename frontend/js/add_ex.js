@@ -2,7 +2,7 @@ $(document).ready(function () {
   /** v1.0
    * js file to insert the exam
   */
-
+  
   // name of exam writer
   function writeName() {
     var name = window.exam_name.value;
@@ -15,12 +15,19 @@ $(document).ready(function () {
     writeName();
   });
 
+  
 
   // add qustion progress
   var 
   valOFinpNum = $('#numOFq'),
   btnAddQ = $('#addQustion'),
-  qCounter = 0;
+  qCounter = 0; 
+  
+  // Edit htis qCounter
+  if ($('#counterOL').length > 0) {
+    var qCounter = $('#counterOL').find('li').length;
+  } 
+
 
 
   btnAddQ.click( function(){
